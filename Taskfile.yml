@@ -1,0 +1,121 @@
+version: '3'
+
+tasks:
+  clean:
+    desc: '🧹 Clean project'
+    cmds:
+      - ./flutterw clean
+
+  clean-generated:
+    desc: '🧽 Remove generated code'
+    aliases: [ cleang ]
+    cmds:
+      - rm -rf lib/generated
+
+  clean-all:
+    desc: '🧼 Clean project and remove generated code'
+    aliases: [ cleana ]
+    cmds:
+      - task: clean
+      - task: clean-generated
+
+  install:
+    desc: '📦️ Get dependencies in all packages'
+    cmds:
+      - ./scripts/get_dependencies.sh
+
+  format:
+    desc: '💼 Format code'
+    aliases: [ fmt ]
+    cmds:
+      - ./dartw format -l 120 .
+
+  generate-localization:
+    desc: '🎌️ Generate l10n'
+    aliases: [ genloc ]
+    cmds:
+      - ./flutterw gen-l10n
+
+  generate-icons:
+    desc: '🖼️ Generate icon resource constants'
+    aliases: [ genic ]
+    cmds:
+      - ./scripts/generate_icons.sh
+
+  generate-code:
+    desc: '👷 Run build_runner'
+    aliases: [ genc ]
+    cmds:
+      - ./flutterw packages pub run build_runner build --delete-conflicting-outputs
+
+  generate:
+    desc: '🚧 Generate everything'
+    aliases: [ gen ]
+    cmds:
+      - task: clean-generated
+      - task: generate-localization
+      - task: generate-code
+      - task: generate-icons
+      - task: format
+
+  analyze:
+    desc: '👮 Run flutter analyze'
+    cmds:
+      - ./scripts/flutter_analyze.sh
+
+  test:
+    desc: '🐒 Run tests with coverage'
+    cmds:
+      - ./scripts/test.sh
+
+  check:
+    desc: '🔦 Run checks'
+    cmds:
+      - task: analyze
+      - task: test
+
+  build-android:
+    desc: '🤖 Build Android apk'
+    vars:
+      PACKAGE_FORMAT: '{{ default "apk" .PACKAGE_FORMAT }}'
+    cmds:
+      - ./flutterw build {{ .PACKAGE_FORMAT }} --flavor {{ .FLAVOR }} --build-number={{ .BUILD_NUMBER }} --build-name={{ .BUILD_NAME }}
+
+  pod-install:
+    desc: '🥜 Install cocoa pods'
+    dir: ios
+    cmds:
+      - pod install
+
+  build-ios:
+    desc: '🍏 Build iOS app'
+    cmds:
+      - ./flutterw build ios --flavor {{ .FLAVOR }} --build-number={{ .BUILD_NUMBER }} --build-name={{ .BUILD_NAME }}
+
+  prepare-no-check:
+    aliases: [ pnc ]
+    desc: '🧑‍🍳 Clean project, get dependencies, and generate all the code'
+    cmds:
+      - task: clean-all
+      - task: install
+      - task: generate
+
+  prepare:
+    desc: '👌 Clean project, get dependencies, generate all the code, and run checks'
+    cmds:
+      - task: prepare-no-check
+      - task: check
+
+  storybook-run:
+    aliases: [ sbr ]
+    desc: 'Run Storybook in browser'
+    cmds:
+      - ./flutterw run -d chrome
+    dir: storybook
+
+  storybook-build:
+    aliases: [ sbb ]
+    desc: 'Build Storybook for production'
+    cmds:
+      - ../flutterw build web
+    dir: storybook

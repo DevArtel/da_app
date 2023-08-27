@@ -1,29 +1,109 @@
-# This file configures the analyzer, which statically analyzes Dart code to
-# check for errors, warnings, and lints.
-#
-# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
-# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
-# invoked from the command line by running `flutter analyze`.
+include: package:devartel_analysis/analysis_options.yaml
 
-# The following line activates a set of recommended lints for Flutter apps,
-# packages, and plugins designed to encourage good coding practices.
-include: package:flutter_lints/flutter.yaml
+analyzer:
+  plugins:
+    - dart_code_metrics
+  exclude:
+    - "lib/**/*.g.dart"
+    - "lib/**/*.freezed.dart"
+    - "**/generated/**/*.dart"
+    - "**/generated/*.dart"
+    - "lib/generated_plugin_registrant.dart"
 
-linter:
-  # The lint rules applied to this project can be customized in the
-  # section below to disable rules from the `package:flutter_lints/flutter.yaml`
-  # included above or to enable additional rules. A list of all available lints
-  # and their documentation is published at
-  # https://dart-lang.github.io/linter/lints/index.html.
-  #
-  # Instead of disabling a lint rule for the entire project in the
-  # section below, it can also be suppressed for a single line of code
-  # or a specific dart file by using the `// ignore: name_of_lint` and
-  # `// ignore_for_file: name_of_lint` syntax on the line or in the file
-  # producing the lint.
+dart_code_metrics:
+  anti-patterns:
+    - long-method
+    - long-parameter-list
+  metrics:
+    cyclomatic-complexity: 20
+    maximum-nesting-level: 5
+    number-of-parameters: 5
+    source-lines-of-code: 50
+  metrics-exclude:
+    - test/**
   rules:
-    # avoid_print: false  # Uncomment to disable the `avoid_print` rule
-    # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
-
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+    - always-remove-listener
+    - avoid-global-state
+    - avoid-missing-enum-constant-in-map
+    - avoid-nested-conditional-expressions:
+        - acceptable-level: 2
+    - avoid-returning-widgets
+    - avoid-throw-in-catch-block
+    - avoid-unused-parameters
+    - avoid-unnecessary-setstate
+    - avoid-unnecessary-type-assertions
+    - avoid-unnecessary-type-casts
+    - avoid-expanded-as-spacer
+    - avoid-unrelated-type-assertions
+    - avoid-wrapping-in-padding
+    - avoid-shrink-wrap-in-lists
+    - avoid-top-level-members-in-tests
+    - binary-expression-operand-order
+    - double-literal-format
+    - newline-before-return
+    - no-boolean-literal-compare
+    - no-empty-block
+    - no-equal-then-else
+    - no-magic-number:
+        allowed: [ 0, 1, 2, 4, 8, 12, 16, 20, 24, 32, 40, 48 ]
+    - prefer-async-await
+    - prefer-immediate-return
+    - prefer-enums-by-name
+    - prefer-last
+    - prefer-trailing-comma
+    - prefer-conditional-expressions
+    - prefer-correct-edge-insets-constructor
+    - prefer-correct-identifier-length:
+        exceptions: [ 'i', 'x', 'y', 'r', 't' ]
+        min-identifier-length: 2
+    - prefer-extracting-callbacks:
+        allowed-line-count: 2
+        ignored-named-arguments:
+          - onPressed
+          - onTap # todo: remove later
+          - onChanged
+          - listener
+          - transitionBuilder
+          - onSubmitted
+          - onFieldSubmitted
+    - tag-name:
+        var-names: [ _tag, _logTag, tag, logTag ]
+        strip-prefix: _
+    - ban-name:
+        entries:
+          - ident: Scaffold
+            description: Use AppScaffold instead
+          - ident: RichText
+            description: Use Text.rich instead
+          - ident: Theme
+            description: Use AppTheme instead
+          - ident: InkWell
+            description: Use buttons from ui_kit instead
+          - ident: TextButton
+            description: Use AppTextButton instead
+          - ident: DateTime.now
+            description: Use AppTime.now instead
+          - ident: onSubmit
+            description: Use onSubmitted instead
+          - ident: Divider
+            description: Use AppDivider instead
+    - member-ordering:
+        order:
+          - constructors
+          - public-static-const-fields
+          - public-static-fields
+          - public-static-methods
+          - private-static-const-fields
+          - private-static-fields
+          - private-static-methods
+          - named-constructors
+          - factory-constructors
+          - overridden-fields
+          - public-fields
+          - private-fields
+          - overridden-getters-setters
+          - public-getters-setters
+          - private-getters-setters
+          - overridden-methods
+          - public-methods
+          - private-methods

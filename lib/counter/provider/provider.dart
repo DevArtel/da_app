@@ -6,8 +6,7 @@ final counterProvider = StateNotifierProvider.autoDispose<CounterNotifier, int>(
 );
 
 class CounterNotifier extends StateNotifier<int> {
-  CounterNotifier(this.ref)
-      : super(ref.read(counterRepositoryProvider).counter);
+  CounterNotifier(this.ref) : super(ref.read(counterRepositoryProvider).counter);
 
   final Ref ref;
 

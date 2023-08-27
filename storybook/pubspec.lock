@@ -18,7 +18,7 @@ packages:
     source: hosted
     version: "2.1.1"
   cached_network_image:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: cached_network_image
       sha256: fd3d0dc1d451f9a252b32d95d3f0c3c487bc41a75eba2e6097cb0b9c71491b15
@@ -82,14 +82,14 @@ packages:
       url: "https://github.com/DevArtel/devartel_analysis.git"
     source: git
     version: "2.0.0"
-  dio:
+  device_frame:
     dependency: transitive
     description:
-      name: dio
-      sha256: ce75a1b40947fea0a0e16ce73337122a86762e38b982e1ccb909daa3b9bc4197
+      name: device_frame
+      sha256: afe76182aec178d171953d9b4a50a43c57c7cf3c77d8b09a48bf30c8fa04dd9d
       url: "https://pub.dev"
     source: hosted
-    version: "5.3.2"
+    version: "1.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -135,53 +135,24 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.3.1"
-  flutter_hooks:
-    dependency: "direct main"
-    description:
-      name: flutter_hooks
-      sha256: "8bd1345f1909f56abac8f33428709e9272591f839a7246678fdd4b7c5bdba5ce"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.18.1"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_riverpod:
-    dependency: transitive
-    description:
-      name: flutter_riverpod
-      sha256: b83ac5827baadefd331ea1d85110f34645827ea234ccabf53a655f41901a9bf4
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.6"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_web_plugins:
+  freezed_annotation:
     dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
-  go_router:
-    dependency: "direct main"
     description:
-      name: go_router
-      sha256: b3cadd2cd59a4103fd5f6bc572ca75111264698784e927aa471921c3477d5475
+      name: freezed_annotation
+      sha256: c3fd9336eb55a38cc1bbd79ab17573113a8deccd0ecbbf926cca3c62803b5c2d
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.0"
-  hooks_riverpod:
-    dependency: "direct main"
-    description:
-      name: hooks_riverpod
-      sha256: "117edbe7e5cfc02e31a94f97e2acd4581f54bc37fcda9dce1f606f8ac851ba24"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.3.7"
+    version: "2.4.1"
   http:
     dependency: transitive
     description:
@@ -206,29 +177,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.18.1"
-  logger:
-    dependency: "direct main"
-    description:
-      path: "packages/logger"
-      relative: true
-    source: path
-    version: "0.0.1"
-  logging:
+  json_annotation:
     dependency: transitive
     description:
-      name: logging
-      sha256: "623a88c9594aa774443aa3eb2d41807a48486b5613e67599fb4c41c0ad47c340"
+      name: json_annotation
+      sha256: b10a7b2ff83d83c777edba3c6a0f97045ddadd56c944e1a23a3fdf43a1bf4467
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.0"
-  logging_appenders:
-    dependency: transitive
-    description:
-      name: logging_appenders
-      sha256: "17033082e6c5277637ffa90a9479dad000e6a4cea572a38019c438f42dfbab6b"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.0"
+    version: "4.8.1"
   matcher:
     dependency: transitive
     description:
@@ -253,6 +209,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.1"
+  nested:
+    dependency: transitive
+    description:
+      name: nested
+      sha256: "03bac4c528c64c95c722ec99280375a6f2fc708eec17c7b3f07253b626cd2a20"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
   octo_image:
     dependency: transitive
     description:
@@ -333,14 +297,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.5"
-  riverpod:
+  resizable_widget:
     dependency: transitive
     description:
-      name: riverpod
-      sha256: "80e48bebc83010d5e67a11c9514af6b44bbac1ec77b4333c8ea65dbc79e2d8ef"
+      name: resizable_widget
+      sha256: db2919754b93f386b9b3fb15e9f48f6c9d6d41f00a24397629133c99df86606a
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.6"
+    version: "1.0.5"
   rxdart:
     dependency: transitive
     description:
@@ -386,14 +350,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.11.0"
-  state_notifier:
-    dependency: transitive
-    description:
-      name: state_notifier
-      sha256: "8fe42610f179b843b12371e40db58c9444f8757f8b69d181c97e50787caed289"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.2+1"
   stream_channel:
     dependency: transitive
     description:
@@ -445,7 +401,7 @@ packages:
   ui_kit:
     dependency: "direct main"
     description:
-      path: "packages/ui_kit"
+      path: "../packages/ui_kit"
       relative: true
     source: path
     version: "0.0.1"
@@ -473,6 +429,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.4-beta"
+  widgetbook:
+    dependency: "direct main"
+    description:
+      name: widgetbook
+      sha256: e2b6bbec0b7805037cb58937200461d0c19fcfdd50dc21fc3ceb558f2489a710
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.0"
   win32:
     dependency: transitive
     description:
