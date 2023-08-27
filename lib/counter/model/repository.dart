@@ -1,5 +1,6 @@
 import 'package:da_app/counter/model/data_store.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:logger/logger.dart';
 
 final counterRepositoryProvider = Provider<CounterRepository>(
   (ref) => CounterRepositoryImpl(
@@ -18,6 +19,8 @@ class CounterRepositoryImpl implements CounterRepository {
     required this.dataStore,
   });
 
+  static const String _tag = 'CounterRepository';
+
   final CounterDataStore dataStore;
 
   @override
@@ -25,6 +28,7 @@ class CounterRepositoryImpl implements CounterRepository {
 
   @override
   void increment() {
+    Log.d(_tag, 'call increment()');
     dataStore.counter += 1;
   }
 }
