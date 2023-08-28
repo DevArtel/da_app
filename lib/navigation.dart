@@ -1,5 +1,6 @@
-import 'package:da_app/counter/counter.dart';
 import 'package:go_router/go_router.dart';
+
+import 'features/counter/ui/page.dart';
 
 final router = GoRouter(
   routes: [

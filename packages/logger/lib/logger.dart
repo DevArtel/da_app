@@ -49,8 +49,7 @@ void setupLogger() {
 
 /// Appender which outputs all log records using the given formatter using dart:developer log function.
 class DeveloperLogAppender extends BaseLogAppender {
-  DeveloperLogAppender({LogRecordFormatter? formatter})
-      : super(formatter ?? const DefaultLogRecordFormatter());
+  DeveloperLogAppender({LogRecordFormatter? formatter}) : super(formatter ?? const DefaultLogRecordFormatter());
 
   static DeveloperLogAppender setupLogging({
     Level level = Level.ALL,
@@ -93,8 +92,7 @@ class _FileLogRecordFormatter extends LogRecordFormatter {
       sb.write(rec.error);
     }
 
-    final stackTrace = rec.stackTrace ??
-        (rec.error is Error ? (rec.error as Error?)?.stackTrace : null);
+    final stackTrace = rec.stackTrace ?? (rec.error is Error ? (rec.error as Error?)?.stackTrace : null);
     if (stackTrace != null) {
       sb.writeln();
       sb.write(stackTrace);
@@ -148,14 +146,9 @@ class FileLogger extends BaseLogAppender {
   }
 
   Future<void> _deleteOldRecords() async {
-    assert(_logFile != null,
-        'Open the log file before trying to delete old records');
+    assert(_logFile != null, 'Open the log file before trying to delete old records');
 
-    final lineStream = _logFile!
-        .openRead()
-        .transform(utf8.decoder)
-        .transform(const LineSplitter())
-        .cast<String>();
+    final lineStream = _logFile!.openRead().transform(utf8.decoder).transform(const LineSplitter()).cast<String>();
 
     final now = DateTime.now();
 
@@ -219,8 +212,7 @@ class FileLogger extends BaseLogAppender {
   }
 }
 
-final class StringLinkedListEntry<String>
-    extends LinkedListEntry<StringLinkedListEntry<String>> {
+final class StringLinkedListEntry<String> extends LinkedListEntry<StringLinkedListEntry<String>> {
   StringLinkedListEntry(this.value);
 
   String value;
