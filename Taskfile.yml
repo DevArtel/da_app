@@ -110,7 +110,7 @@ tasks:
     aliases: [ sbr ]
     desc: 'Run Storybook in browser'
     cmds:
-      - ./flutterw run -d chrome
+      - ../flutterw run -d chrome
     dir: storybook
 
   storybook-build:
