@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ui_kit/theme/colors.dart';
+import 'package:ui_kit/src/theme/colors.dart';
 
 class AppTextStyles extends ThemeExtension<AppTextStyles> {
   AppTextStyles(this.appColors);

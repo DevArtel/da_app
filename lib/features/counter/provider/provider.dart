@@ -1,5 +1,5 @@
-import 'package:da_app/features/counter/counter.dart';
 import 'package:da_app/features/counter/model/data_store.dart';
+import 'package:da_app/features/counter/model/repository.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final counterDataStoreProvider = Provider<CounterDataStore>((ref) => CounterDataStore());

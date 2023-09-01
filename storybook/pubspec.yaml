@@ -5,7 +5,8 @@ publish_to: 'none'
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.0 <4.0.0'
+  sdk: ^3.1.0
+  flutter: ^3.13.0
 
 dependencies:
   flutter:
@@ -23,7 +24,7 @@ dev_dependencies:
   devartel_analysis:
     git:
       url: https://github.com/DevArtel/devartel_analysis.git
-      ref: v2.0.0
+      ref: v3.0.0
 
 flutter:
   uses-material-design: true

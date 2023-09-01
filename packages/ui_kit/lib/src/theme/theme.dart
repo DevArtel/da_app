@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:ui_kit/theme/colors.dart';
-import 'package:ui_kit/theme/text_styles.dart';
+import 'package:ui_kit/src/theme/colors.dart';
+import 'package:ui_kit/src/theme/text_styles.dart';
 
 class AppTheme {
   AppTheme._();
 
   static ThemeData get light {
-    final semanticColors = AppColors.light;
+    const semanticColors = AppColors.light;
 
     return ThemeData.light()._applyColors(semanticColors)._applyExtensions(semanticColors);
   }
 
   static ThemeData get dark {
-    final semanticColors = AppColors.dark;
+    const semanticColors = AppColors.dark;
 
     return ThemeData.dark()._applyColors(semanticColors)._applyExtensions(semanticColors);
   }
