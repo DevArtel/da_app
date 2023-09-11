@@ -4,8 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
-
-import 'app_localizations_en.dart';
+import 'package:ui_kit/src/l10n/app_localizations_en.dart';
 
 /// Callers can lookup localized strings with an instance of UiLocalizations
 /// returned by `UiLocalizations.of(context)`.
@@ -87,9 +86,7 @@ abstract class UiLocalizations {
   ];
 
   /// A list of this localizations delegate's supported locales.
-  static const List<Locale> supportedLocales = <Locale>[
-    Locale('en')
-  ];
+  static const List<Locale> supportedLocales = <Locale>[Locale('en')];
 
   /// No description provided for @counterValue.
   ///
@@ -114,17 +111,14 @@ class _UiLocalizationsDelegate extends LocalizationsDelegate<UiLocalizations> {
 }
 
 UiLocalizations lookupUiLocalizations(Locale locale) {
-
-
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
-    case 'en': return UiLocalizationsEn();
+    case 'en':
+      return UiLocalizationsEn();
   }
 
-  throw FlutterError(
-    'UiLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
-    'an issue with the localizations generation tool. Please file an issue '
-    'on GitHub with a reproducible sample app and the gen-l10n configuration '
-    'that was used.'
-  );
+  throw FlutterError('UiLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'an issue with the localizations generation tool. Please file an issue '
+      'on GitHub with a reproducible sample app and the gen-l10n configuration '
+      'that was used.');
 }

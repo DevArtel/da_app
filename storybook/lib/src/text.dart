@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ui_kit/ui_kit.dart';
-import 'package:ui_kit/widgets/counter_text.dart';
 import 'package:widgetbook/widgetbook.dart';
 
 final textsFolder = WidgetbookFolder(

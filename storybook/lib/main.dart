@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:storybook/text.dart';
+import 'package:storybook/src/text.dart';
 import 'package:ui_kit/ui_kit.dart';
 import 'package:widgetbook/widgetbook.dart';
 

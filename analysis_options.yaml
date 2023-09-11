@@ -59,34 +59,17 @@ dart_code_metrics:
     - prefer-extracting-callbacks:
         allowed-line-count: 2
         ignored-named-arguments:
-          - onPressed
-          - onTap # todo: remove later
-          - onChanged
           - listener
           - transitionBuilder
-          - onSubmitted
-          - onFieldSubmitted
     - tag-name:
         var-names: [ _tag, _logTag, tag, logTag ]
         strip-prefix: _
     - ban-name:
         entries:
-          - ident: Scaffold
-            description: Use AppScaffold instead
           - ident: RichText
             description: Use Text.rich instead
           - ident: Theme
             description: Use AppTheme instead
-          - ident: InkWell
-            description: Use buttons from ui_kit instead
-          - ident: TextButton
-            description: Use AppTextButton instead
-          - ident: DateTime.now
-            description: Use AppTime.now instead
-          - ident: onSubmit
-            description: Use onSubmitted instead
-          - ident: Divider
-            description: Use AppDivider instead
     - member-ordering:
         order:
           - constructors

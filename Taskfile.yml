@@ -36,11 +36,11 @@ tasks:
     cmds:
       - ./flutterw gen-l10n
 
-  generate-icons:
-    desc: '🖼️ Generate icon resource constants'
-    aliases: [ genic ]
-    cmds:
-      - ./scripts/generate_icons.sh
+  # generate-icons:
+  #   desc: '🖼️ Generate icon resource constants'
+  #   aliases: [ genic ]
+  #   cmds:
+  #     - ./scripts/generate_icons.sh
 
   generate-code:
     desc: '👷 Run build_runner'
@@ -55,7 +55,7 @@ tasks:
       - task: clean-generated
       - task: generate-localization
       - task: generate-code
-      - task: generate-icons
+      # - task: generate-icons
       - task: format
 
   analyze:
