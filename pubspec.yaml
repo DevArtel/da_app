@@ -16,7 +16,7 @@ dependencies:
   intl: any
   collection: any
   meta: any
-  go_router: 10.0.0
+  go_router: 10.2.0
   cached_network_image: 3.2.3
   flutter_hooks: 0.18.1
   hooks_riverpod: 2.3.7
@@ -30,6 +30,7 @@ dev_dependencies:
     sdk: flutter
 
   build_runner: 2.4.6
+  go_router_builder: 2.3.2
   devartel_analysis:
     git:
       url: https://github.com/DevArtel/devartel_analysis.git

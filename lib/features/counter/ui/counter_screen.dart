@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-class CounterPage extends ConsumerWidget {
-  const CounterPage({super.key});
+class CounterScreen extends ConsumerWidget {
+  const CounterScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
