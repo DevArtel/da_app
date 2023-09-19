@@ -11,17 +11,20 @@ typedef RouterScopeBuilder = Widget Function(
 class RouterScope extends StatefulWidget {
   const RouterScope({
     required this.builder,
+    required this.initialLocation,
     super.key,
   });
 
   final RouterScopeBuilder builder;
+  final String initialLocation;
 
   @override
   State<RouterScope> createState() => _RouterScopeState();
 }
 
 class _RouterScopeState extends State<RouterScope> {
-  final _router = GoRouter(
+  late final _router = GoRouter(
+    initialLocation: widget.initialLocation,
     routes: [
       ...counter_routes.$appRoutes,
     ],
