@@ -4,13 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-// TODO: splash / app initializer
-// TODO: Fastlane
-// TODO: gh actions workflows
-// TODO: gh pr templates
-// TODO: deep links
-// TODO: Generate icons font
-// TODO: go_router_builder
 void main() {
   runApp(const ProviderScope(child: MyApp()));
 }
@@ -28,6 +21,5 @@ class MyApp extends StatelessWidget {
         routerConfig: router,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
-        themeMode: ThemeMode.light,
       );
 }

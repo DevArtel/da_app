@@ -45,8 +45,6 @@
 	<false/>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
-	<key>Flavor</key>
-	<string>$(PRODUCT_FLAVOR)</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>

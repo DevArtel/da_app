@@ -1,0 +1,168 @@
+name: Build and Deploy
+
+on:
+  workflow_call:
+    inputs:
+      build-name:
+        required: true
+        type: string
+      build-number:
+        required: true
+        type: string
+      flavor:
+        required: true
+        type: string
+      deploy:
+        required: true
+        type: boolean
+      android-format:
+        required: true
+        type: string
+      changelog:
+        required: false
+        default: '{}'
+        type: string
+
+env:
+  DART_ARTIFACT_NAME: dart-code-${{ github.sha }}
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: '🛒 Checkout'
+        uses: actions/checkout@v3
+      - name: '💽 Setup environment'
+        uses: ./.github/actions/setup-env
+        with:
+          install-ruby: 'false'
+          repo-token: ${{ github.token }}
+      - name: '🏗️ Prepare'
+        run: task prepare-no-check
+      - name: '🧠 Upload lib artifact'
+        uses: actions/upload-artifact@v3
+        with:
+          path: lib
+          name: ${{ env.DART_ARTIFACT_NAME }}
+          retention-days: 3
+
+#======= Uncomment this to enable reporting to Slack
+#
+#      - name: '💢 Report error'
+#        uses: someimportantcompany/github-actions-slack-message@v1
+#        if: failure()
+#        with:
+#          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#          text: 'Failed to prepare code'
+#          color: failure
+#
+#=======
+
+  deploy-android:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - name: '🛒 Checkout'
+        uses: actions/checkout@v3
+      - name: '🧠 Download lib artifact'
+        uses: actions/download-artifact@v3
+        with:
+          path: lib
+          name: ${{ env.DART_ARTIFACT_NAME }}
+      - name: '💽 Setup environment'
+        uses: ./.github/actions/setup-env
+        with:
+          repo-token: ${{ github.token }}
+      - name: '🔑 Extract keys'
+        env:
+          ANDROID_RELEASE_KEY: ${{ secrets.ANDROID_RELEASE_KEY }}
+          PLAYSTORE_DEPLOY_JSON: ${{ secrets.PLAYSTORE_DEPLOY_JSON }}
+        run: |
+          echo "$ANDROID_RELEASE_KEY" | base64 -d > android/release-keystore.jks
+          echo "$PLAYSTORE_DEPLOY_JSON" | base64 -d > android/play_store_deploy.json
+      - name: '🏗️ Build'
+        env:
+          GIT_AUTH: ${{ secrets.PROTOS_REPO_GITHUB_TOKEN }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          BUILD_NAME=${{ inputs.build-name }}
+          BUILD_NUMBER=${{ inputs.build-number }}
+          FLAVOR=${{ inputs.flavor }}
+          FORMAT=${{ inputs.android-format }}
+          task build-android FLAVOR=$FLAVOR BUILD_NUMBER=$BUILD_NUMBER BUILD_NAME=$BUILD_NAME PACKAGE_FORMAT=$FORMAT
+      - name: '🚀 Deploy'
+        if: ${{ inputs.deploy }}
+        uses: maierj/fastlane-action@v3.0.0
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        with:
+          lane: deploy_${{ inputs.flavor }}
+          subdirectory: 'android'
+          options: '{"changelog": ${{ inputs.changelog }}}'
+      - name: '💢 Report error'
+        uses: someimportantcompany/github-actions-slack-message@v1
+        if: failure()
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          text: 'Failed to deploy production release: failed on Android build deployment'
+          color: failure
+
+  deploy-ios:
+    runs-on: macos-12
+    needs: prepare
+    timeout-minutes: 90
+    env:
+      GIT_AUTH: ${{ secrets.PROTOS_REPO_GITHUB_TOKEN }}
+      IOS_CERT_USERNAME: ${{ secrets.IOS_CERT_USERNAME }}
+      IOS_CERT_GIT_URL: ${{ secrets.IOS_CERT_GIT_URL }}
+      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+    steps:
+      - name: '🛒 Checkout'
+        uses: actions/checkout@v3
+      - name: '🧠 Download lib artifact'
+        uses: actions/download-artifact@v3
+        with:
+          path: lib
+          name: ${{ env.DART_ARTIFACT_NAME }}
+      - name: '💽 Setup environment'
+        uses: ./.github/actions/setup-env
+        with:
+          install-protoc: 'false'
+          repo-token: ${{ github.token }}
+      - name: '🗂️ Install provisioning profiles'
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: 'install_${{inputs.flavor}}_profiles'
+          subdirectory: 'ios'
+      - name: '🔑 Extract itunes key'
+        env:
+          ITUNES_API_KEY: ${{ secrets.ITUNES_API_KEY }}
+        run: |
+          echo "$ITUNES_API_KEY" | base64 -d > ios/AuthKey_K5U599XK74.p8
+      - name: '🏗️ Flutter build'
+        run: |
+          BUILD_NAME=${{ inputs.build-name }}
+          BUILD_NUMBER=${{ inputs.build-number }}
+          FLAVOR=${{ inputs.flavor }}
+          task build-ios FLAVOR=$FLAVOR BUILD_NUMBER=$BUILD_NUMBER BUILD_NAME=$BUILD_NAME
+      - name: '🏗️ Fastlane build'
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: build
+          subdirectory: 'ios'
+          options: '{ "flavor": "${{ inputs.flavor }}" }'
+      - name: '🚀 Deploy'
+        if: ${{ inputs.deploy }}
+        uses: maierj/fastlane-action@v3.0.0
+        with:
+          lane: deploy_${{inputs.flavor}}
+          subdirectory: 'ios'
+          options: '{"changelog": ${{ inputs.changelog }}}'
+      - name: '💢 Report error'
+        uses: someimportantcompany/github-actions-slack-message@v1
+        if: failure()
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          text: 'Failed to deploy production release: failed on iOS build deployment'
+          color: failure

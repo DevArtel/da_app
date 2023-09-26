@@ -1,0 +1,33 @@
+name: Flutter test
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: '💽 Setup environment'
+        uses: ./.github/actions/setup-env
+        with:
+          install-ruby: 'false'
+          repo-token: ${{ github.token }}
+
+      - name: '🧪 Prepare and Test'
+        env:
+          GIT_AUTH: ${{ secrets.PROTOS_REPO_GITHUB_TOKEN }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: task prepare
+
+      - uses: someimportantcompany/github-actions-slack-message@v1
+        if: failure()
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          text: Build failed
+          color: failure

@@ -1,0 +1,32 @@
+name: 'Release Storybook'
+description: 'Build and deploy Storybook to Firebase hosting'
+inputs:
+  channel-id:
+    description: "Id of hosting channel to deploy"
+    required: true
+  repo-token:
+    description: "GitHub repo token"
+    required: true
+  firebase-service-account:
+    description: "Firebase service account JSON token"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: '💽 Setup environment'
+      uses: ./.github/actions/setup-env
+      with:
+        install-ruby: 'false'
+        install-protoc: 'false'
+        repo-token: ${{ inputs.repo-token }}
+    - name: 'Build Storybook'
+      run: task storybook-build
+      shell: bash
+    - name: 'Deploy to Firebase hosting'
+      uses: FirebaseExtended/action-hosting-deploy@v0
+      with:
+        repoToken: "${{ inputs.repo-token }}"
+        firebaseServiceAccount: "${{ inputs.firebase-service-account }}"
+        channelId: "${{ inputs.channel-id }}"
+        entryPoint: "./storybook"

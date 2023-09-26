@@ -1,0 +1,70 @@
+name: 'Setup environment'
+description: 'Prepare all the tools to build the project'
+inputs:
+  install-flutter:
+    description: "Should install Flutter"
+    required: false
+    default: 'true'
+  install-protoc:
+    description: "Should install Protoc"
+    required: false
+    default: 'true'
+  install-ruby:
+    description: "Should install Ruby"
+    required: false
+    default: 'true'
+  repo-token:
+    description: "GitHub repo token"
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - name: '🔧 Load fvm config'
+      uses: kuhnroyal/flutter-fvm-config-action@v1
+      if: ${{ inputs.install-flutter == 'true' }}
+
+    - name: '🌍 Load .env file'
+      uses: xom9ikk/dotenv@v2
+      with:
+        path: .
+
+    - run: |
+        echo "Should install Flutter ${{ env.FLUTTER_VERSION }}: ${{ inputs.install-flutter == 'true' }}"
+        echo "Should install Protoc ${{ env.PROTOC_VERSION }}: ${{ inputs.install-protoc == 'true' }}"
+        echo "Should install Ruby ${{ env.RUBY_VERSION }}: ${{ inputs.install-ruby == 'true' }}"
+      shell: bash
+
+    - name: '🤸 Install Task'
+      uses: arduino/setup-task@v1
+      with:
+        repo-token: ${{ inputs.repo-token }}
+
+    - name: '🐦️ Setup Flutter'
+      id: flutter-action
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: ${{ env.FLUTTER_VERSION }}
+        channel: ${{ env.FLUTTER_CHANNEL }}
+        cache: true
+      if: ${{ inputs.install-flutter == 'true' }}
+
+    - name: '🧰 Setup protobuf compiler'
+      uses: arduino/setup-protoc@v1
+      with:
+        version: ${{ env.PROTOC_VERSION }}
+        repo-token: ${{ inputs.repo-token }}
+      if: ${{ inputs.install-protoc == 'true' }}
+
+    - name: '🎯 Setup dart protoc plugin'
+      run: flutter pub global activate protoc_plugin ${{ env.PROTOC_PLUGIN_VERSION }}
+      shell: bash
+      if: ${{ inputs.install-protoc == 'true' }}
+
+    - name: '💎 Setup Ruby'
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ env.RUBY_VERSION }}
+        bundler-cache: true
+        working-directory: ${{ runner.os == 'macOS' && 'ios' || 'android' }}
+      if: ${{ inputs.install-ruby == 'true' }}
