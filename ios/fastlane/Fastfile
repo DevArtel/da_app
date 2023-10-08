@@ -1,0 +1,77 @@
+default_platform(:ios)
+
+platform :ios do
+  before_all do
+    setup_ci
+  end
+
+  lane :install_profiles do |options|
+    force = options[:force] == true
+    install_profile("appstore", ENV["IOS_BUNDLE_ID"], force, false)
+    install_profile("development", ENV["IOS_BUNDLE_ID"], force, false)
+    install_profile("adhoc", ENV["IOS_BUNDLE_ID"], force, false)
+  end
+
+
+  lane :build do |options|
+    flavor = options[:flavor]
+    build_configuration = "Release-#{flavor}"
+    is_prod = flavor == "prod"
+    export_method = is_prod ? "app-store" : "ad-hoc"
+
+    build_ios_app(
+      scheme: flavor,
+      configuration: build_configuration,
+      export_options: { method: export_method }
+    )
+  end
+
+  lane :deploy_staging do |options|
+    upload_symbols_to_sentry()
+
+    firebase_app_distribution(
+      app: ENV["FIREBASE_APP_ID"],
+      firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
+      release_notes: options[:changelog],
+      groups: "test-team"
+    )
+  end
+
+  lane :install_staging_profiles do |options|
+    install_profile("adhoc", "#{ENV["IOS_BUNDLE_ID"]}.staging", false, true)
+  end
+
+  lane :install_prod_profiles do |options|
+    install_profile("appstore", ENV["IOS_BUNDLE_ID"], false, true)
+  end
+
+  lane :deploy_prod do |options|
+    apply_itunes_connect_key_on_ci()
+
+    upload_symbols_to_sentry()
+
+    pilot(skip_waiting_for_build_processing: true)
+  end
+
+  def install_profile(type, app_identifier, force, readonly)
+    match(
+      type: type,
+      app_identifier: app_identifier,
+      git_url: ENV["IOS_CERT_GIT_URL"],
+      git_basic_authorization: Base64.strict_encode64(ENV["GIT_AUTH"]),
+      username: ENV["IOS_CERT_USERNAME"],
+      readonly: readonly,
+      force: force
+    )
+  end
+
+  def apply_itunes_connect_key_on_ci()
+    app_store_connect_api_key(
+      key_id: "K5U599XK74",
+      issuer_id: "43d3d31d-1377-4897-bcf6-57e9c75b2dfe",
+      key_filepath: "./AuthKey_K5U599XK74.p8",
+      in_house: false,
+    )
+  end
+
+end

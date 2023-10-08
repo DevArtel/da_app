@@ -40,13 +40,6 @@ jobs:
           body: ${{ steps.changelog.outputs.changelog }}
           draft: false
           prerelease: false
-      - name: '🆕 Create Sentry release'
-        uses: ./.github/actions/release-sentry
-        with:
-          environment: staging
-          token: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          version: ${{ steps.extract.outputs.build-name }}
-          build-number: ${{ steps.extract.outputs.build-number }}
       - name: '🖨️ Trim commits links from the changelog'
         id: shorten_changelog
         run: |
@@ -61,13 +54,14 @@ jobs:
           log="${log//$'`'/'%60'}"
           log="${log//$'"'/'%22'}"
           echo "CHANGELOG=$log" >> $GITHUB_OUTPUT
-      - name: '💢 Report error'
-        uses: someimportantcompany/github-actions-slack-message@v1
-        if: failure()
-        with:
-          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          text: 'Failed to deploy staging release: failed to create release'
-          color: failure
+
+#      - name: '💢 Report error'
+#        uses: someimportantcompany/github-actions-slack-message@v1
+#        if: failure()
+#        with:
+#          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#          text: 'Failed to deploy staging release: failed to create release'
+#          color: failure
 
   build-and-deploy:
     uses: ./.github/workflows/build_and_deploy.yaml
@@ -80,28 +74,3 @@ jobs:
       android-format: apk
       deploy: true
     secrets: inherit
-
-  release-on-youtrack:
-    runs-on: ubuntu-latest
-    needs: [ build-and-deploy, create-release ]
-    steps:
-      - name: '🛒 Checkout'
-        uses: actions/checkout@v3
-      - name: '🧶 Setup node'
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: '📋 Release on YouTrack'
-        run: |
-          cd scripts/youtrack
-          npm install
-          node release.js ${{ needs.create-release.outputs.BUILD_NAME }}
-        env:
-          YOUTRACK_TOKEN: ${{ secrets.YOUTRACK_TOKEN }}
-      - name: '💢 Report error'
-        uses: someimportantcompany/github-actions-slack-message@v1
-        if: failure()
-        with:
-          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          text: 'Failed to deploy staging release: failed to create youtrack release'
-          color: failure

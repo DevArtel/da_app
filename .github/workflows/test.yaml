@@ -20,14 +20,14 @@ jobs:
 
       - name: '🧪 Prepare and Test'
         env:
-          GIT_AUTH: ${{ secrets.PROTOS_REPO_GITHUB_TOKEN }}
+          GIT_AUTH: ${{ secrets.GITHUB_TOKEN }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: task prepare
 
-      - uses: someimportantcompany/github-actions-slack-message@v1
-        if: failure()
-        with:
-          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          text: Build failed
-          color: failure
+#      - uses: someimportantcompany/github-actions-slack-message@v1
+#        if: failure()
+#        with:
+#          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#          text: Build failed
+#          color: failure

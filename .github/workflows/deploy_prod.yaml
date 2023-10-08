@@ -19,20 +19,14 @@ jobs:
         uses: ./.github/actions/extract-version
         with:
           flavor: prod
-      - name: '🆕 Create Sentry release'
-        uses: ./.github/actions/release-sentry
-        with:
-          environment: prod
-          token: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          version: ${{ steps.extract.outputs.build-name }}
-          build-number: ${{ steps.extract.outputs.build-number }}
-      - name: '💢 Report error'
-        uses: someimportantcompany/github-actions-slack-message@v1
-        if: failure()
-        with:
-          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          text: 'Failed to deploy staging release: failed to create release'
-          color: failure
+
+#      - name: '💢 Report error'
+#        uses: someimportantcompany/github-actions-slack-message@v1
+#        if: failure()
+#        with:
+#          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#          text: 'Failed to deploy staging release: failed to create release'
+#          color: failure
 
   build-and-deploy:
     uses: ./.github/workflows/build_and_deploy.yaml

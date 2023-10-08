@@ -46,8 +46,6 @@ jobs:
           name: ${{ env.DART_ARTIFACT_NAME }}
           retention-days: 3
 
-#======= Uncomment this to enable reporting to Slack
-#
 #      - name: '💢 Report error'
 #        uses: someimportantcompany/github-actions-slack-message@v1
 #        if: failure()
@@ -55,8 +53,6 @@ jobs:
 #          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
 #          text: 'Failed to prepare code'
 #          color: failure
-#
-#=======
 
   deploy-android:
     runs-on: ubuntu-latest
@@ -82,7 +78,7 @@ jobs:
           echo "$PLAYSTORE_DEPLOY_JSON" | base64 -d > android/play_store_deploy.json
       - name: '🏗️ Build'
         env:
-          GIT_AUTH: ${{ secrets.PROTOS_REPO_GITHUB_TOKEN }}
+          GIT_AUTH: ${{ secrets.GITHUB_TOKEN }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
@@ -100,20 +96,21 @@ jobs:
           lane: deploy_${{ inputs.flavor }}
           subdirectory: 'android'
           options: '{"changelog": ${{ inputs.changelog }}}'
-      - name: '💢 Report error'
-        uses: someimportantcompany/github-actions-slack-message@v1
-        if: failure()
-        with:
-          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          text: 'Failed to deploy production release: failed on Android build deployment'
-          color: failure
+
+#      - name: '💢 Report error'
+#        uses: someimportantcompany/github-actions-slack-message@v1
+#        if: failure()
+#        with:
+#          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#          text: 'Failed to deploy production release: failed on Android build deployment'
+#          color: failure
 
   deploy-ios:
     runs-on: macos-12
     needs: prepare
     timeout-minutes: 90
     env:
-      GIT_AUTH: ${{ secrets.PROTOS_REPO_GITHUB_TOKEN }}
+      GIT_AUTH: ${{ secrets.GITHUB_TOKEN }}
       IOS_CERT_USERNAME: ${{ secrets.IOS_CERT_USERNAME }}
       IOS_CERT_GIT_URL: ${{ secrets.IOS_CERT_GIT_URL }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
@@ -159,10 +156,11 @@ jobs:
           lane: deploy_${{inputs.flavor}}
           subdirectory: 'ios'
           options: '{"changelog": ${{ inputs.changelog }}}'
-      - name: '💢 Report error'
-        uses: someimportantcompany/github-actions-slack-message@v1
-        if: failure()
-        with:
-          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-          text: 'Failed to deploy production release: failed on iOS build deployment'
-          color: failure
+
+#      - name: '💢 Report error'
+#        uses: someimportantcompany/github-actions-slack-message@v1
+#        if: failure()
+#        with:
+#          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+#          text: 'Failed to deploy production release: failed on iOS build deployment'
+#          color: failure
