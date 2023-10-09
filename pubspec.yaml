@@ -35,6 +35,8 @@ dev_dependencies:
       url: https://github.com/DevArtel/devartel_analysis.git
       ref: v3.0.0
 
+  dart_code_metrics: 5.7.6
+
 flutter:
   uses-material-design: true
   generate: true
