@@ -1,3 +1,4 @@
+import 'package:da_app/common/errors/app_exception.dart';
 import 'package:flutter/services.dart';
 
 const _flavorChanel = MethodChannel('flavor_channel');
@@ -24,7 +25,11 @@ class FlavorDetector {
       case 'prod':
         return Flavor.prod;
       default:
-        throw Exception('Flavor is not defined');
+        throw FlavorIsNotDefinedException();
     }
   }
+}
+
+class FlavorIsNotDefinedException extends AppException {
+  FlavorIsNotDefinedException() : super('Flavor is not defined');
 }

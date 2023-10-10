@@ -57,9 +57,9 @@ platform :ios do
     match(
       type: type,
       app_identifier: app_identifier,
-      git_url: ENV["IOS_CERT_GIT_URL"],
+      git_url: ENV["MATCH_GIT_URL"],
       git_basic_authorization: Base64.strict_encode64(ENV["GIT_AUTH"]),
-      username: ENV["IOS_CERT_USERNAME"],
+      username: ENV["MATCH_USERNAME"],
       readonly: readonly,
       force: force
     )
@@ -67,9 +67,9 @@ platform :ios do
 
   def apply_itunes_connect_key_on_ci()
     app_store_connect_api_key(
-      key_id: "K5U599XK74",
-      issuer_id: "43d3d31d-1377-4897-bcf6-57e9c75b2dfe",
-      key_filepath: "./AuthKey_K5U599XK74.p8",
+      key_id: ENV["ITUNES_API_KEY_ID"],
+      issuer_id: ENV["ITUNES_API_KEY_ISSUER_ID"],
+      key_filepath: "./AuthKey_#{ENV["ITUNES_API_KEY_ID"]}.p8",
       in_house: false,
     )
   end

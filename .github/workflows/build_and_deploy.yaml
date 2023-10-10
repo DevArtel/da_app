@@ -72,13 +72,12 @@ jobs:
       - name: '🔑 Extract keys'
         env:
           ANDROID_RELEASE_KEY: ${{ secrets.ANDROID_RELEASE_KEY }}
-          PLAYSTORE_DEPLOY_JSON: ${{ secrets.PLAYSTORE_DEPLOY_JSON }}
+          PLAY_STORE_DEPLOY_JSON: ${{ secrets.PLAY_STORE_DEPLOY_JSON }}
         run: |
           echo "$ANDROID_RELEASE_KEY" | base64 -d > android/release-keystore.jks
-          echo "$PLAYSTORE_DEPLOY_JSON" | base64 -d > android/play_store_deploy.json
+          echo "$PLAY_STORE_DEPLOY_JSON" | base64 -d > android/play_store_deploy.json
       - name: '🏗️ Build'
         env:
-          GIT_AUTH: ${{ secrets.GITHUB_TOKEN }}
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
@@ -110,9 +109,9 @@ jobs:
     needs: prepare
     timeout-minutes: 90
     env:
-      GIT_AUTH: ${{ secrets.GITHUB_TOKEN }}
-      IOS_CERT_USERNAME: ${{ secrets.IOS_CERT_USERNAME }}
-      IOS_CERT_GIT_URL: ${{ secrets.IOS_CERT_GIT_URL }}
+      GIT_AUTH: ${{ secrets.MATCH_GITHUB_TOKEN }}
+      MATCH_USERNAME: ${{ secrets.MATCH_USERNAME }}
+      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
     steps:
       - name: '🛒 Checkout'
@@ -134,9 +133,12 @@ jobs:
           subdirectory: 'ios'
       - name: '🔑 Extract itunes key'
         env:
+          ITUNES_API_KEY_ID: ${{ secrets.ITUNES_API_KEY_ID }}
+          ITUNES_API_KEY_ISSUER_ID: ${{ secrets.ITUNES_API_KEY_ISSUER_ID }}
           ITUNES_API_KEY: ${{ secrets.ITUNES_API_KEY }}
         run: |
-          echo "$ITUNES_API_KEY" | base64 -d > ios/AuthKey_K5U599XK74.p8
+          API_KEY_FILE_NAME="ios/AuthKey_$ITUNES_API_KEY_ID.p8"
+          echo "$ITUNES_API_KEY" | base64 -d > $API_KEY_FILE_NAME
       - name: '🏗️ Flutter build'
         run: |
           BUILD_NAME=${{ inputs.build-name }}

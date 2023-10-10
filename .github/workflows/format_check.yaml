@@ -17,7 +17,7 @@ jobs:
         with:
           install-protoc: 'false'
           install-ruby: 'false'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          repo-token: ${{ github.token }}
 
       - name: Check format
         run: dart format --set-exit-if-changed -l 120 .

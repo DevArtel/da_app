@@ -22,6 +22,6 @@ jobs:
       - name: '💽 Build and deploy Storybook'
         uses: ./.github/actions/release-storybook
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          firebase-service-account: "${{ secrets.FIREBASE_SERVICE_ACCOUNT }}"
-          channel-id: "${{ github.ref == 'refs/heads/master' && 'live' || (github.head_ref || github.ref_name) }}"
+          repo-token: ${{ github.token }}
+          firebase-service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          channel-id: ${{ github.ref == 'refs/heads/master' && 'live' || (github.head_ref || github.ref_name) }}

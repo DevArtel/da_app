@@ -12,7 +12,7 @@ class CounterRepositoryImpl implements CounterRepository {
     required this.dataStore,
   });
 
-  static const String _tag = 'CounterRepository';
+  static const String _tag = 'CounterRepositoryImpl';
 
   final CounterDataStore dataStore;
 

@@ -28,12 +28,12 @@ jobs:
         id: changelog
         uses: metcalfc/changelog-generator@v3.0.0
         with:
-          mytoken: ${{ secrets.GITHUB_TOKEN }}
+          mytoken: ${{ github.token }}
       - name: '🆔 Create release'
         id: create_release
         uses: actions/create-release@latest
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ github.token }}
         with:
           tag_name: ${{ github.ref }}
           release_name: ${{steps.extract.outputs.build-name }}
