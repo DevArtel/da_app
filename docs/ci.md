@@ -22,7 +22,7 @@ Android:
 iOS:
 - `IOS_BUNDLE_ID` – identifier of the iOS app (like `io.devartel.daapp`).
 - `MATCH_USERNAME` – Apple ID Username (refer to [Match doc](https://docs.fastlane.tools/actions/match/) for more info).
-- `MATCH_GITHUB_TOKEN` – GitHub Token for access to Profiles repository.  
+- `MATCH_GITHUB_BASIC_AUTH` – GitHub Token for access to Profiles repository.  
 - `MATCH_GIT_URL` – URL to the git repo containing all the certificates (refer to [Match doc](https://docs.fastlane.tools/actions/match/) for more info).
 - `MATCH_PASSWORD` – passphrase to decrypt your profiles (refer to [Match doc](https://docs.fastlane.tools/actions/match/) for more info).
 - `ITUNES_API_KEY_ID` – ID of App Store Connect API Key.

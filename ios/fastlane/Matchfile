@@ -1,7 +1,2 @@
-git_url("https://github.com/yasno-live/ios-provisioning.git")
-
 storage_mode("git")
-
 type("development")
-
-app_identifier([ENV["IOS_BUNDLE_ID"]])

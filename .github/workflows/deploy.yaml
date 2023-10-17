@@ -1,0 +1,66 @@
+name: Build and deploy
+
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      BUILD_NAME: ${{ steps.extract.outputs.build-name }}
+      BUILD_NUMBER: ${{ steps.extract.outputs.build-number }}
+    steps:
+      - name: 🛒 Checkout
+        uses: actions/checkout@v3
+      - name: 🔢 Extract build version and number
+        id: extract
+        uses: ./.github/actions/extract-version
+      - name: 🆕 Generate changelog
+        id: changelog
+        uses: requarks/changelog-action@v1
+        with:
+          token: ${{ github.token }}
+          tag: ${{ github.ref_name }}
+          writeToFile: false
+          excludeTypes: ''
+      - name: 🆔 Create release
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: false
+          draft: false
+          prerelease: false
+          makeLatest: true
+          name: ${{ github.ref_name }}
+          body: ${{ steps.changelog.outputs.changes }}
+          token: ${{ github.token }}
+      - name: 💢 Report error
+        uses: someimportantcompany/github-actions-slack-message@v1
+        if: failure()
+        with:
+          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
+          text: 'Failed to deploy staging release: failed to create release'
+          color: failure
+
+  deploy-staging:
+    uses: ./.github/workflows/build_and_deploy.yaml
+    needs: create-release
+    with:
+      build-name: ${{ needs.create-release.outputs.BUILD_NAME }}
+      build-number: ${{ needs.create-release.outputs.BUILD_NUMBER }}
+      flavor: staging
+      android-format: apk
+      deploy: true
+    secrets: inherit
+
+  deploy-prod:
+    uses: ./.github/workflows/build_and_deploy.yaml
+    needs: create-release
+    with:
+      build-name: ${{ needs.create-release.outputs.BUILD_NAME }}
+      build-number: ${{ needs.create-release.outputs.BUILD_NUMBER }}
+      flavor: prod
+      android-format: appbundle
+      deploy: true
+    secrets: inherit

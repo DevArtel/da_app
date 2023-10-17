@@ -23,37 +23,45 @@ For _fastlane_ installation instructions, see [Installing _fastlane_](https://do
 
 
 
-### ios distribute_ad
+### ios build
 
 ```sh
-[bundle exec] fastlane ios distribute_ad
-```
-
-Distribute to Firebase App Distribution
-
-### ios install_adhoc_profiles
-
-```sh
-[bundle exec] fastlane ios install_adhoc_profiles
+[bundle exec] fastlane ios build
 ```
 
 
 
-### ios install_appstore_profiles
+### ios deploy_staging
 
 ```sh
-[bundle exec] fastlane ios install_appstore_profiles
+[bundle exec] fastlane ios deploy_staging
 ```
 
 
 
-### ios alpha
+### ios install_staging_profiles
 
 ```sh
-[bundle exec] fastlane ios alpha
+[bundle exec] fastlane ios install_staging_profiles
 ```
 
-Release to TestFlight
+
+
+### ios install_prod_profiles
+
+```sh
+[bundle exec] fastlane ios install_prod_profiles
+```
+
+
+
+### ios deploy_prod
+
+```sh
+[bundle exec] fastlane ios deploy_prod
+```
+
+
 
 ----
 

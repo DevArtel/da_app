@@ -109,7 +109,7 @@ jobs:
     needs: prepare
     timeout-minutes: 90
     env:
-      GIT_AUTH: ${{ secrets.MATCH_GITHUB_TOKEN }}
+      MATCH_GITHUB_BASIC_AUTH: ${{ secrets.MATCH_GITHUB_BASIC_AUTH }}
       MATCH_USERNAME: ${{ secrets.MATCH_USERNAME }}
       MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
       MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
