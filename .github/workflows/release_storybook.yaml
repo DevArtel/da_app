@@ -19,9 +19,9 @@ jobs:
       - name: '🛒 Checkout'
         uses: actions/checkout@v3
 
-      - name: '💽 Build and deploy Storybook'
-        uses: ./.github/actions/release-storybook
-        with:
-          repo-token: ${{ github.token }}
-          firebase-service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
-          channel-id: ${{ github.ref == 'refs/heads/master' && 'live' || (github.head_ref || github.ref_name) }}
+#      - name: '💽 Build and deploy Storybook'
+#        uses: ./.github/actions/release-storybook
+#        with:
+#          repo-token: ${{ github.token }}
+#          firebase-service-account: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+#          channel-id: ${{ github.ref == 'refs/heads/master' && 'live' || (github.head_ref || github.ref_name) }}

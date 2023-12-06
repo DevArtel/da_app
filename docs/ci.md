@@ -38,7 +38,6 @@ Firebase:
 - `FIREBASE_TOKEN`
 - `FIREBASE_SERVICE_ACCOUNT`
 - `FIREBASE_APP_ID`
-- `FIREBASE_CLI_TOKEN`
 
 Misc:
 - `SLACK_WEBHOOK_URL` – Slack Webhook URL to report job statuses.

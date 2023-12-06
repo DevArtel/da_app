@@ -1,10 +1,18 @@
+import 'dart:async';
+
+import 'package:da_app/common/firebase_options.dart';
 import 'package:da_app/common/l10n/l10n.dart';
 import 'package:da_app/common/navigation/navigation.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ui_kit/ui_kit.dart';
 
-void main() {
+Future<void> main() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const ProviderScope(child: MyApp()));
 }
 

@@ -31,7 +31,7 @@ platform :ios do
 
     firebase_app_distribution(
       app: ENV["FIREBASE_APP_ID"],
-      firebase_cli_token: ENV["FIREBASE_CLI_TOKEN"],
+      FIREBASE_TOKEN: ENV["FIREBASE_TOKEN"],
       release_notes: options[:changelog],
       groups: "test-team"
     )

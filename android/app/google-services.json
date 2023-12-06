@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "614292160353",
+    "project_id": "da-app-2b7e1",
+    "storage_bucket": "da-app-2b7e1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614292160353:android:cda1f697d3828b94130f20",
+        "android_client_info": {
+          "package_name": "io.devartel.da_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjQpyn26ddx5ajJ4U7pWiyuoM96ztTEqI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
