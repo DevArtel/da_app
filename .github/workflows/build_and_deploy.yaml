@@ -104,60 +104,60 @@ jobs:
 #          text: 'Failed to deploy production release: failed on Android build deployment'
 #          color: failure
 
-  deploy-ios:
-    runs-on: macos-12
-    needs: prepare
-    timeout-minutes: 90
-    env:
-      MATCH_GITHUB_BASIC_AUTH: ${{ secrets.MATCH_GITHUB_BASIC_AUTH }}
-      MATCH_USERNAME: ${{ secrets.MATCH_USERNAME }}
-      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
-      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-    steps:
-      - name: '🛒 Checkout'
-        uses: actions/checkout@v3
-      - name: '🧠 Download lib artifact'
-        uses: actions/download-artifact@v3
-        with:
-          path: lib
-          name: ${{ env.DART_ARTIFACT_NAME }}
-      - name: '💽 Setup environment'
-        uses: ./.github/actions/setup-env
-        with:
-          install-protoc: 'false'
-          repo-token: ${{ github.token }}
-      - name: '🗂️ Install provisioning profiles'
-        uses: maierj/fastlane-action@v3.0.0
-        with:
-          lane: 'install_${{inputs.flavor}}_profiles'
-          subdirectory: 'ios'
-      - name: '🔑 Extract itunes key'
-        env:
-          ITUNES_API_KEY_ID: ${{ secrets.ITUNES_API_KEY_ID }}
-          ITUNES_API_KEY_ISSUER_ID: ${{ secrets.ITUNES_API_KEY_ISSUER_ID }}
-          ITUNES_API_KEY: ${{ secrets.ITUNES_API_KEY }}
-        run: |
-          API_KEY_FILE_NAME="ios/AuthKey_$ITUNES_API_KEY_ID.p8"
-          echo "$ITUNES_API_KEY" | base64 -d > $API_KEY_FILE_NAME
-      - name: '🏗️ Flutter build'
-        run: |
-          BUILD_NAME=${{ inputs.build-name }}
-          BUILD_NUMBER=${{ inputs.build-number }}
-          FLAVOR=${{ inputs.flavor }}
-          task build-ios FLAVOR=$FLAVOR BUILD_NUMBER=$BUILD_NUMBER BUILD_NAME=$BUILD_NAME
-      - name: '🏗️ Fastlane build'
-        uses: maierj/fastlane-action@v3.0.0
-        with:
-          lane: build
-          subdirectory: 'ios'
-          options: '{ "flavor": "${{ inputs.flavor }}" }'
-      - name: '🚀 Deploy'
-        if: ${{ inputs.deploy }}
-        uses: maierj/fastlane-action@v3.0.0
-        with:
-          lane: deploy_${{inputs.flavor}}
-          subdirectory: 'ios'
-          options: '{"changelog": ${{ inputs.changelog }}}'
+#  deploy-ios:
+#    runs-on: macos-12
+#    needs: prepare
+#    timeout-minutes: 90
+#    env:
+#      MATCH_GITHUB_BASIC_AUTH: ${{ secrets.MATCH_GITHUB_BASIC_AUTH }}
+#      MATCH_USERNAME: ${{ secrets.MATCH_USERNAME }}
+#      MATCH_GIT_URL: ${{ secrets.MATCH_GIT_URL }}
+#      MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+#    steps:
+#      - name: '🛒 Checkout'
+#        uses: actions/checkout@v3
+#      - name: '🧠 Download lib artifact'
+#        uses: actions/download-artifact@v3
+#        with:
+#          path: lib
+#          name: ${{ env.DART_ARTIFACT_NAME }}
+#      - name: '💽 Setup environment'
+#        uses: ./.github/actions/setup-env
+#        with:
+#          install-protoc: 'false'
+#          repo-token: ${{ github.token }}
+#      - name: '🗂️ Install provisioning profiles'
+#        uses: maierj/fastlane-action@v3.0.0
+#        with:
+#          lane: 'install_${{inputs.flavor}}_profiles'
+#          subdirectory: 'ios'
+#      - name: '🔑 Extract itunes key'
+#        env:
+#          ITUNES_API_KEY_ID: ${{ secrets.ITUNES_API_KEY_ID }}
+#          ITUNES_API_KEY_ISSUER_ID: ${{ secrets.ITUNES_API_KEY_ISSUER_ID }}
+#          ITUNES_API_KEY: ${{ secrets.ITUNES_API_KEY }}
+#        run: |
+#          API_KEY_FILE_NAME="ios/AuthKey_$ITUNES_API_KEY_ID.p8"
+#          echo "$ITUNES_API_KEY" | base64 -d > $API_KEY_FILE_NAME
+#      - name: '🏗️ Flutter build'
+#        run: |
+#          BUILD_NAME=${{ inputs.build-name }}
+#          BUILD_NUMBER=${{ inputs.build-number }}
+#          FLAVOR=${{ inputs.flavor }}
+#          task build-ios FLAVOR=$FLAVOR BUILD_NUMBER=$BUILD_NUMBER BUILD_NAME=$BUILD_NAME
+#      - name: '🏗️ Fastlane build'
+#        uses: maierj/fastlane-action@v3.0.0
+#        with:
+#          lane: build
+#          subdirectory: 'ios'
+#          options: '{ "flavor": "${{ inputs.flavor }}" }'
+#      - name: '🚀 Deploy'
+#        if: ${{ inputs.deploy }}
+#        uses: maierj/fastlane-action@v3.0.0
+#        with:
+#          lane: deploy_${{inputs.flavor}}
+#          subdirectory: 'ios'
+#          options: '{"changelog": ${{ inputs.changelog }}}'
 
 #      - name: '💢 Report error'
 #        uses: someimportantcompany/github-actions-slack-message@v1
