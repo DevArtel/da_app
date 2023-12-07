@@ -6,7 +6,7 @@ platform :android do
     firebase_app_distribution(
       app: ENV["FIREBASE_APP_ID"],
       apk_path: "../build/app/outputs/flutter-apk/app-staging-release.apk",
-      FIREBASE_TOKEN: ENV["FIREBASE_TOKEN"],
+      firebase_cli_token: ENV["FIREBASE_TOKEN"],
       release_notes: options[:changelog],
       groups: "test-team"
     )
