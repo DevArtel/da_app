@@ -4,7 +4,7 @@ platform :android do
   desc "Distribute to Firebase App Distribution"
   lane :deploy_staging do |options|
     firebase_app_distribution(
-      app: ENV["FIREBASE_APP_ID"],
+      app: ENV["FIREBASE_ANDROID_APP_ID"],
       apk_path: "../build/app/outputs/flutter-apk/app-staging-release.apk",
       firebase_cli_token: ENV["FIREBASE_TOKEN"],
       release_notes: options[:changelog],
