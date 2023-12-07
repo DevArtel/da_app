@@ -91,6 +91,7 @@ jobs:
         uses: maierj/fastlane-action@v3.0.0
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
         with:
           lane: deploy_${{ inputs.flavor }}
           subdirectory: 'android'
