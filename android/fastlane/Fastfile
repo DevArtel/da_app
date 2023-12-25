@@ -15,7 +15,7 @@ platform :android do
   desc "Release to Google Play Alpha"
   lane :deploy_prod do
     upload_to_play_store(
-      track: 'alpha',
+      track: 'internal',
       release_status: 'draft',
       aab: '../build/app/outputs/bundle/prodRelease/app-prod-release.aab',
       skip_upload_metadata: false,

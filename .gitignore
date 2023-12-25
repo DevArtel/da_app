@@ -9,6 +9,7 @@
 .history
 .svn/
 migrate_working_dir/
+/android/fastlane/report.xml
 
 # IntelliJ related
 *.iml
@@ -35,6 +36,7 @@ migrate_working_dir/
 
 # Secrets
 /.github/.env
+/android/play_store_deploy.json
 
 # Symbolication related
 app.*.symbols
