@@ -22,14 +22,16 @@ platform :ios do
     build_ios_app(
       scheme: flavor,
       configuration: build_configuration,
-      export_options: { method: export_method }
+      export_options: {
+        method: export_method,
+      }
     )
   end
 
   lane :deploy_staging do |options|
     firebase_app_distribution(
-      app: ENV["FIREBASE_APP_ID"],
-      FIREBASE_TOKEN: ENV["FIREBASE_TOKEN"],
+      app: ENV["FIREBASE_IOS_APP_ID"],
+      firebase_cli_token: ENV["FIREBASE_TOKEN"],
       release_notes: options[:changelog],
       groups: "test-team"
     )

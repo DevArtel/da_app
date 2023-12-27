@@ -10,6 +10,7 @@
 .svn/
 migrate_working_dir/
 /android/fastlane/report.xml
+/ios/fastlane/report.xml
 
 # IntelliJ related
 *.iml
@@ -48,6 +49,10 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# iOS build
+/ios/Runner.app.dSYM.zip
+/ios/Runner.ipa
 
 # FVM-related
 .fvm/flutter_sdk
