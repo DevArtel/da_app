@@ -1,0 +1,16 @@
+name: Nightly Build
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  build:
+    uses: ./.github/workflows/build_and_deploy.yaml
+    with:
+      build-name: 1.0.0
+      build-number: 1
+      flavor: staging
+      android-format: apk
+      deploy: false
+    secrets: inherit

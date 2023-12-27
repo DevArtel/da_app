@@ -1,0 +1,23 @@
+name: Flutter format check 🧙🏼‍♂️
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: '💽 Setup environment'
+        uses: ./.github/actions/setup-env
+        with:
+          install-protoc: 'false'
+          install-ruby: 'false'
+          repo-token: ${{ github.token }}
+
+      - name: Check format
+        run: dart format --set-exit-if-changed -l 120 .

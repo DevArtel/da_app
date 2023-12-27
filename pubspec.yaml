@@ -24,6 +24,7 @@ dependencies:
     path: packages/ui_kit
   logger:
     path: packages/logger
+  firebase_core: 2.24.0
 
 dev_dependencies:
   flutter_test:
@@ -34,6 +35,8 @@ dev_dependencies:
     git:
       url: https://github.com/DevArtel/devartel_analysis.git
       ref: v3.0.0
+
+  dart_code_metrics: 5.7.6
 
 flutter:
   uses-material-design: true

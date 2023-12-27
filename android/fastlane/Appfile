@@ -1,0 +1,2 @@
+json_key_file("play_store_deploy.json")
+package_name("io.devartel.da_app")
