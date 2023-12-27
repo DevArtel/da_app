@@ -156,6 +156,8 @@ jobs:
       - name: '🚀 Deploy'
         if: ${{ inputs.deploy }}
         uses: maierj/fastlane-action@v3.0.0
+        env:
+          FIREBASE_IOS_APP_ID: ${{ secrets.FIREBASE_IOS_APP_ID }}
         with:
           lane: deploy_${{inputs.flavor}}
           subdirectory: 'ios'
