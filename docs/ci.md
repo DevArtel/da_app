@@ -30,9 +30,9 @@ iOS:
 - `ITUNES_API_KEY_ISSUER_ID` – ID of issuer for App Store Connect API Key.
 - `ITUNES_API_KEY` – JWT for authorization in App Store Connect API. 
   - To obtain this key follow [this manual](https://developer.apple.com/documentation/appstoreconnectapi/creating_api_keys_for_app_store_connect_api).
-- `FASTLANE_IOS_TEAM_ID` – Developer Portal Team ID.
+- `IOS_DEVELOPMENT_PORTAL_TEAM_ID` – Developer Portal Team ID.
   - [Here is a description](https://developer.apple.com/help/account/manage-your-team/locate-your-team-id/) how to get Team ID.
-- `FASTLANE_IOS_ITC_TEAM_ID` – App Store Connect Team ID.
+- `IOS_APP_STORE_CONNECT_TEAM_ID` – App Store Connect Team ID.
 
 Firebase:
 - `FIREBASE_TOKEN`

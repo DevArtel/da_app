@@ -27,8 +27,6 @@ platform :ios do
   end
 
   lane :deploy_staging do |options|
-    upload_symbols_to_sentry()
-
     firebase_app_distribution(
       app: ENV["FIREBASE_APP_ID"],
       FIREBASE_TOKEN: ENV["FIREBASE_TOKEN"],
@@ -47,8 +45,6 @@ platform :ios do
 
   lane :deploy_prod do |options|
     apply_itunes_connect_key_on_ci()
-
-    upload_symbols_to_sentry()
 
     pilot(skip_waiting_for_build_processing: true)
   end
