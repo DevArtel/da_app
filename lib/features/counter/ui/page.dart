@@ -12,7 +12,7 @@ class CounterPage extends ConsumerWidget {
     final detector = FlavorDetector();
     await detector.init();
 
-    return detector.flavor.toString();
+    return detector.flavor.name;
   }
 
   @override

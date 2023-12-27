@@ -12,10 +12,14 @@ import Flutter
       if let controller = self.window.rootViewController as? FlutterBinaryMessenger {
           let channel = FlutterMethodChannel(name: "flavor_channel", binaryMessenger: controller)
 
-          channel.setMethodCallHandler { (call, result) in
-              let flavor = Bundle.main.infoDictionary?["Flavor"]
-              result(flavor)
-          }
+          channel.setMethodCallHandler({(call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+              if call.method == "getFlavor" {
+                  let flavor = Bundle.main.infoDictionary?["Flavor"] as? String
+                  result(flavor)
+              } else {
+                  result(FlutterMethodNotImplemented)
+              }
+      })
       }
       
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)

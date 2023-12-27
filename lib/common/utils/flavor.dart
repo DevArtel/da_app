@@ -8,6 +8,17 @@ enum Flavor {
   staging,
 }
 
+extension FlavorExtension on Flavor {
+  String get name {
+    switch (this) {
+      case Flavor.prod:
+        return 'prod';
+      case Flavor.staging:
+        return 'staging';
+    }
+  }
+}
+
 class FlavorDetector {
   late final Flavor _flavor;
 
