@@ -14,6 +14,23 @@ import 'package:flutter/foundation.dart' show defaultTargetPlatform, kIsWeb, Tar
 /// );
 /// ```
 class DefaultFirebaseOptions {
+  static const FirebaseOptions android = FirebaseOptions(
+    apiKey: 'AIzaSyBjQpyn26ddx5ajJ4U7pWiyuoM96ztTEqI',
+    appId: '1:614292160353:android:cda1f697d3828b94130f20',
+    messagingSenderId: '614292160353',
+    projectId: 'da-app-2b7e1',
+    storageBucket: 'da-app-2b7e1.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyA3Ji77DPLyvEpbRezD93TL_i77HHtLuFo',
+    appId: '1:614292160353:ios:828c726dff2270a4130f20',
+    messagingSenderId: '614292160353',
+    projectId: 'da-app-2b7e1',
+    storageBucket: 'da-app-2b7e1.appspot.com',
+    iosBundleId: 'io.devartel.daApp',
+  );
+
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       throw UnsupportedError(
@@ -47,21 +64,4 @@ class DefaultFirebaseOptions {
         );
     }
   }
-
-  static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyBjQpyn26ddx5ajJ4U7pWiyuoM96ztTEqI',
-    appId: '1:614292160353:android:cda1f697d3828b94130f20',
-    messagingSenderId: '614292160353',
-    projectId: 'da-app-2b7e1',
-    storageBucket: 'da-app-2b7e1.appspot.com',
-  );
-
-  static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyA3Ji77DPLyvEpbRezD93TL_i77HHtLuFo',
-    appId: '1:614292160353:ios:828c726dff2270a4130f20',
-    messagingSenderId: '614292160353',
-    projectId: 'da-app-2b7e1',
-    storageBucket: 'da-app-2b7e1.appspot.com',
-    iosBundleId: 'io.devartel.daApp',
-  );
 }

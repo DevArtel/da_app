@@ -36,12 +36,6 @@ tasks:
     cmds:
       - ./flutterw gen-l10n
 
-  # generate-icons:
-  #   desc: '🖼️ Generate icon resource constants'
-  #   aliases: [ genic ]
-  #   cmds:
-  #     - ./scripts/generate_icons.sh
-
   generate-code:
     desc: '👷 Run build_runner'
     aliases: [ genc ]
@@ -108,14 +102,20 @@ tasks:
 
   storybook-run:
     aliases: [ sbr ]
-    desc: 'Run Storybook in browser'
+    desc: '✨ Run Storybook in browser'
     cmds:
       - ../flutterw run -d chrome
     dir: storybook
 
   storybook-build:
     aliases: [ sbb ]
-    desc: 'Build Storybook for production'
+    desc: '🧚 Build Storybook for production'
     cmds:
       - ../flutterw build web
     dir: storybook
+
+  gh-set-secrets:
+    desc: '🤐 Set GitHub Actions Secrets from ./github/.env'
+    cmds:
+      - gh secret set -f .env
+    dir: .github
