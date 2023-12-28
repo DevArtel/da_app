@@ -2,6 +2,11 @@
 
 set -eo pipefail
 
+echo "💿 Install FVM"
+brew tap leoafarias/fvm
+brew install fvm
+echo "✅ FVM is installed"
+
 echo "💿 Install Task"
 brew install go-task/tap/go-task
 echo "✅ Task is installed"
