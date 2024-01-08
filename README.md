@@ -3,13 +3,8 @@
 - [Project structure](docs/project_structure.md)
 - [Continuous integration](docs/ci.md)
 
+1. Run `./init.sh`. It will install all the required tools ([fvm](https://fvm.app/), [task](https://taskfile.dev/), [gh cli](https://cli.github.com/)) and run all the preparations to start the project.
+2. Find and replace all the entries of `YF7VY6LB6A.io.devartel.daApp` to your iOS bundle id and `io.devartel.da_app` to your Android package name. 
+3. Rename `.github/.env.example` to `.github/.env`. It contains all the environment variables that you need to build and publish the app locally and on CI. To push this env to CI run `task gh-set-secrets`. It will push these variable to GitHub Secrets.
 
-- Create Firebase project manually
-- Create Testers group (called `test-team` by default) in Firebase project
-- Use Google provided signing key
-- Enable Google Play Android Developer API (Fastlane will tell you about it) https://console.cloud.google.com/apis/library/androidpublisher.googleapis.com?project=da-app-407119
-- Before uploading Android app to any track in Play Console, you must upload at least one release manually
-- https://developer.apple.com/account/resources/identifiers/list Register bundle id. It must be in format `<TeamID>.<BundleId>`, like `YA7TY3LGXC.io.devartel.app`.
-- Once you generated certificates and profiles using fastlane match you must update signing settings. There are two ways:
-  - With fastlane [update_project_provisioning](https://docs.fastlane.tools/actions/update_project_provisioning/)
-  - Manually. Open XCode, select "Runner" in Targets section, then choose "Signing & Capabilities" tab and select your Team for each build type.
+That's it! Now you are ready to implement you first feature. [This guide](docs/feature.md) is your entry point!
