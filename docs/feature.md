@@ -3,7 +3,8 @@
 There is a simple `Counter` feature presented in the project. It uses **Riverpod** for state management and demonstrates separation of layers. So for now you can copy and paste the whole `counter` directory, rename it and all it's components to correspond a feature you're implementing.
 
 The diagram bellow demonstrates dependencies direction between app layers. Each inner layer interacts only with corresponding next outer layer.
-![[layers.png]]
+
+![layers](layers.png)
 
 ## Model
 
