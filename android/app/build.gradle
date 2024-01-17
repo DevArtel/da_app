@@ -57,13 +57,6 @@ android {
     }
 
     signingConfigs {
-        debug {
-            storeFile file("../debug-keystore.jks")
-            storePassword = "android"
-            keyPassword = "android"
-            keyAlias = "debug"
-        }
-
         release {
             storeFile file("../release-keystore.jks")
             storePassword = "$System.env.ANDROID_KEYSTORE_PASSWORD"
@@ -73,9 +66,7 @@ android {
     }
 
     buildTypes {
-        debug {
-            signingConfig signingConfigs.debug
-        }
+        debug {}
 
         release {
             signingConfig signingConfigs.release
