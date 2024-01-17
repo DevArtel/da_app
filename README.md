@@ -8,3 +8,7 @@
 3. Rename `.github/.env.example` to `.github/.env`. It contains all the environment variables that you need to build and publish the app locally and on CI. To push this env to CI run `task gh-set-secrets`. It will push these variable to GitHub Secrets.
 
 That's it! Now you are ready to implement you first feature. [This guide](docs/feature.md) is your entry point!
+
+### Troubleshooting
+
+- If analyze fails during project initialization, try to run `./init.sh` once again.
