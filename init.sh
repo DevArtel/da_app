@@ -15,8 +15,16 @@ echo "💿 Install GitHub CLI"
 brew install gh
 echo "✅ GitHub CLI is installed"
 
+echo "💿 Install Cocoapods"
+brew install cocoapods
+brew link --overwrite cocoapods
+echo "✅ Cocoapods is installed"
+
 echo "🧑‍🍳 Prepare project"
 task prepare
+
+echo "🍫 Install pods"
+task pod-install
 
 echo " ✧ ██████╗  █████╗      █████╗ ██████╗ ██████╗"
 echo "   ██╔══██╗██╔══██╗  ✧ ██╔══██╗██╔══██╗██╔══██╗"

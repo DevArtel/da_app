@@ -79,6 +79,7 @@ tasks:
     desc: '🥜 Install cocoa pods'
     dir: ios
     cmds:
+      - ../flutterw precache --ios
       - pod install
 
   build-ios:
