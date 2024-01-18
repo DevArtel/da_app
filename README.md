@@ -22,3 +22,7 @@ You must specify a build flavor to run the app.
     - Find "Edit configurations..." menu
     - Chose a configuration you want to launch
     - Set required flavor in "Build flavor" property.
+
+### Troubleshooting
+
+- If analyze fails during project initialization, try to run `./init.sh` once again.
