@@ -17,14 +17,14 @@ jobs:
       - name: 🔢 Extract build version and number
         id: extract
         uses: ./.github/actions/extract-version
-#      - name: 🆕 Generate changelog
-#        id: changelog
-#        uses: requarks/changelog-action@v1
-#        with:
-#          token: ${{ github.token }}
-#          tag: ${{ github.ref_name }}
-#          writeToFile: false
-#          excludeTypes: ''
+      #      - name: 🆕 Generate changelog
+      #        id: changelog
+      #        uses: requarks/changelog-action@v1
+      #        with:
+      #          token: ${{ github.token }}
+      #          tag: ${{ github.ref_name }}
+      #          writeToFile: false
+      #          excludeTypes: ''
       - name: 🆔 Create release
         uses: ncipollo/release-action@v1
         with:
@@ -43,16 +43,16 @@ jobs:
           text: 'Failed to deploy staging release: failed to create release'
           color: failure
 
-#  deploy-staging:
-#    uses: ./.github/workflows/build_and_deploy.yaml
-#    needs: create-release
-#    with:
-#      build-name: ${{ needs.create-release.outputs.BUILD_NAME }}
-#      build-number: ${{ needs.create-release.outputs.BUILD_NUMBER }}
-#      flavor: staging
-#      android-format: apk
-#      deploy: true
-#    secrets: inherit
+  deploy-staging:
+    uses: ./.github/workflows/build_and_deploy.yaml
+    needs: create-release
+    with:
+      build-name: ${{ needs.create-release.outputs.BUILD_NAME }}
+      build-number: ${{ needs.create-release.outputs.BUILD_NUMBER }}
+      flavor: staging
+      android-format: apk
+      deploy: true
+    secrets: inherit
 
   deploy-prod:
     uses: ./.github/workflows/build_and_deploy.yaml

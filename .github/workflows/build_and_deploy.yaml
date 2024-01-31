@@ -54,48 +54,48 @@ jobs:
 #          text: 'Failed to prepare code'
 #          color: failure
 
-#  deploy-android:
-#    runs-on: ubuntu-latest
-#    needs: prepare
-#    steps:
-#      - name: '🛒 Checkout'
-#        uses: actions/checkout@v3
-#      - name: '🧠 Download lib artifact'
-#        uses: actions/download-artifact@v3
-#        with:
-#          path: lib
-#          name: ${{ env.DART_ARTIFACT_NAME }}
-#      - name: '💽 Setup environment'
-#        uses: ./.github/actions/setup-env
-#        with:
-#          repo-token: ${{ github.token }}
-#      - name: '🔑 Extract keys'
-#        env:
-#          ANDROID_RELEASE_KEY: ${{ secrets.ANDROID_RELEASE_KEY }}
-#          PLAY_STORE_DEPLOY_JSON: ${{ secrets.PLAY_STORE_DEPLOY_JSON }}
-#        run: |
-#          echo "$ANDROID_RELEASE_KEY" | base64 -d > android/release-keystore.jks
-#          echo "$PLAY_STORE_DEPLOY_JSON" | base64 -d > android/play_store_deploy.json
-#      - name: '🏗️ Build'
-#        env:
-#          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-#          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-#        run: |
-#          BUILD_NAME=${{ inputs.build-name }}
-#          BUILD_NUMBER=${{ inputs.build-number }}
-#          FLAVOR=${{ inputs.flavor }}
-#          FORMAT=${{ inputs.android-format }}
-#          task build-android FLAVOR=$FLAVOR BUILD_NUMBER=$BUILD_NUMBER BUILD_NAME=$BUILD_NAME PACKAGE_FORMAT=$FORMAT
-#      - name: '🚀 Deploy'
-#        if: ${{ inputs.deploy }}
-#        uses: maierj/fastlane-action@v3.0.0
-#        env:
-#          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-#          FIREBASE_ANDROID_APP_ID: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
-#        with:
-#          lane: deploy_${{ inputs.flavor }}
-#          subdirectory: 'android'
-#          options: '{"changelog": ${{ inputs.changelog }}}'
+  deploy-android:
+    runs-on: ubuntu-latest
+    needs: prepare
+    steps:
+      - name: '🛒 Checkout'
+        uses: actions/checkout@v3
+      - name: '🧠 Download lib artifact'
+        uses: actions/download-artifact@v3
+        with:
+          path: lib
+          name: ${{ env.DART_ARTIFACT_NAME }}
+      - name: '💽 Setup environment'
+        uses: ./.github/actions/setup-env
+        with:
+          repo-token: ${{ github.token }}
+      - name: '🔑 Extract keys'
+        env:
+          ANDROID_RELEASE_KEY: ${{ secrets.ANDROID_RELEASE_KEY }}
+          PLAY_STORE_DEPLOY_JSON: ${{ secrets.PLAY_STORE_DEPLOY_JSON }}
+        run: |
+          echo "$ANDROID_RELEASE_KEY" | base64 -d > android/release-keystore.jks
+          echo "$PLAY_STORE_DEPLOY_JSON" | base64 -d > android/play_store_deploy.json
+      - name: '🏗️ Build'
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          BUILD_NAME=${{ inputs.build-name }}
+          BUILD_NUMBER=${{ inputs.build-number }}
+          FLAVOR=${{ inputs.flavor }}
+          FORMAT=${{ inputs.android-format }}
+          task build-android FLAVOR=$FLAVOR BUILD_NUMBER=$BUILD_NUMBER BUILD_NAME=$BUILD_NAME PACKAGE_FORMAT=$FORMAT
+      - name: '🚀 Deploy'
+        if: ${{ inputs.deploy }}
+        uses: maierj/fastlane-action@v3.0.0
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_ANDROID_APP_ID: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
+        with:
+          lane: deploy_${{ inputs.flavor }}
+          subdirectory: 'android'
+          options: '{"changelog": ${{ inputs.changelog }}}'
 
 #      - name: '💢 Report error'
 #        uses: someimportantcompany/github-actions-slack-message@v1
