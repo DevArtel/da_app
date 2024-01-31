@@ -159,6 +159,8 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           FIREBASE_IOS_APP_ID: ${{ secrets.FIREBASE_IOS_APP_ID }}
+          ITUNES_API_KEY_ID: ${{ secrets.ITUNES_API_KEY_ID }}
+          ITUNES_API_KEY_ISSUER_ID: ${{ secrets.ITUNES_API_KEY_ISSUER_ID }}
         with:
           lane: deploy_${{inputs.flavor}}
           subdirectory: 'ios'
