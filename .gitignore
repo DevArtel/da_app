@@ -38,6 +38,7 @@ migrate_working_dir/
 # Secrets
 /.github/.env
 /android/play_store_deploy.json
+/ios/AppStoreConnectAuthKey.p8
 
 # Symbolication related
 app.*.symbols

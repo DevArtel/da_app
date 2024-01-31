@@ -43,16 +43,16 @@ jobs:
           text: 'Failed to deploy staging release: failed to create release'
           color: failure
 
-  deploy-staging:
-    uses: ./.github/workflows/build_and_deploy.yaml
-    needs: create-release
-    with:
-      build-name: ${{ needs.create-release.outputs.BUILD_NAME }}
-      build-number: ${{ needs.create-release.outputs.BUILD_NUMBER }}
-      flavor: staging
-      android-format: apk
-      deploy: true
-    secrets: inherit
+#  deploy-staging:
+#    uses: ./.github/workflows/build_and_deploy.yaml
+#    needs: create-release
+#    with:
+#      build-name: ${{ needs.create-release.outputs.BUILD_NAME }}
+#      build-number: ${{ needs.create-release.outputs.BUILD_NUMBER }}
+#      flavor: staging
+#      android-format: apk
+#      deploy: true
+#    secrets: inherit
 
   deploy-prod:
     uses: ./.github/workflows/build_and_deploy.yaml
