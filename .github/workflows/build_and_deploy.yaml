@@ -139,7 +139,7 @@ jobs:
           ITUNES_API_KEY_ISSUER_ID: ${{ secrets.ITUNES_API_KEY_ISSUER_ID }}
           ITUNES_API_KEY: ${{ secrets.ITUNES_API_KEY }}
         run: |
-          API_KEY_FILE_NAME="ios/AuthKey_$ITUNES_API_KEY_ID.p8"
+          API_KEY_FILE_NAME="ios/AppStoreConnectAuthKey.p8"
           echo "$ITUNES_API_KEY" | base64 -d > $API_KEY_FILE_NAME
       - name: '🏗️ Flutter build'
         run: |
@@ -159,6 +159,8 @@ jobs:
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
           FIREBASE_IOS_APP_ID: ${{ secrets.FIREBASE_IOS_APP_ID }}
+          ITUNES_API_KEY_ID: ${{ secrets.ITUNES_API_KEY_ID }}
+          ITUNES_API_KEY_ISSUER_ID: ${{ secrets.ITUNES_API_KEY_ISSUER_ID }}
         with:
           lane: deploy_${{inputs.flavor}}
           subdirectory: 'ios'

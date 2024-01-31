@@ -17,14 +17,14 @@ jobs:
       - name: 🔢 Extract build version and number
         id: extract
         uses: ./.github/actions/extract-version
-#      - name: 🆕 Generate changelog
-#        id: changelog
-#        uses: requarks/changelog-action@v1
-#        with:
-#          token: ${{ github.token }}
-#          tag: ${{ github.ref_name }}
-#          writeToFile: false
-#          excludeTypes: ''
+      #      - name: 🆕 Generate changelog
+      #        id: changelog
+      #        uses: requarks/changelog-action@v1
+      #        with:
+      #          token: ${{ github.token }}
+      #          tag: ${{ github.ref_name }}
+      #          writeToFile: false
+      #          excludeTypes: ''
       - name: 🆔 Create release
         uses: ncipollo/release-action@v1
         with:
