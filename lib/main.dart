@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:da_app/common/firebase_options.dart';
 import 'package:da_app/common/l10n/l10n.dart';
 import 'package:da_app/common/navigation/navigation.dart';
+import 'package:da_app/features/startup/provider/provider.dart';
+import 'package:da_app/features/startup/ui/page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -15,14 +17,20 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(
+    ProviderScope(
+      child: AppStartup(
+        appBuilder: (context) => const MyApp(),
+      ),
+    ),
+  );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) => MaterialApp.router(
+  Widget build(BuildContext context, WidgetRef ref) => MaterialApp.router(
         localizationsDelegates: const [
           ...AppLocalizations.localizationsDelegates,
           ...UiLocalizations.localizationsDelegates,
@@ -31,5 +39,6 @@ class MyApp extends StatelessWidget {
         routerConfig: router,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
+        debugShowCheckedModeBanner: false,
       );
 }
