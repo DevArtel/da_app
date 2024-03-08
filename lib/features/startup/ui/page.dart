@@ -25,11 +25,10 @@ class AppStartup extends ConsumerWidget {
     return appStartupState.when(
       data: (_) => appBuilder(context),
       error: (error, stackTrace) {
-        print("@@ Error: ${error.toString()}\n${stackTrace.toString()}");
         return AppStartupError(
-        error: error,
-        retry: () => ref.invalidate(appStartupProvider),
-      );
+          error: error,
+          retry: () => ref.invalidate(appStartupProvider),
+        );
       },
       loading: AppStartupLoading.new,
     );

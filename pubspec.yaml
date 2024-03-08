@@ -25,7 +25,7 @@ dependencies:
     path: packages/ui_kit
   logger:
     path: packages/logger
-  firebase_core: 2.24.0
+  firebase_core: 2.24.2
   shared_preferences: 2.2.2
 
 dev_dependencies:
