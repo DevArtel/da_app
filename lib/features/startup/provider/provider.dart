@@ -33,5 +33,4 @@ Future<void> appStartup(AppStartupRef ref) async {
   await initDependencies();
 }
 
-Future<void> _initDependencies() async {
-}
+Future<void> _initDependencies() async {}
