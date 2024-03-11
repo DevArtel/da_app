@@ -11,6 +11,10 @@ echo "💿 Install Task"
 brew install go-task/tap/go-task
 echo "✅ Task is installed"
 
+echo "💿 Install Fluttergen"
+dart pub global activate flutter_gen
+echo "✅ Fluttergen is installed"
+
 echo "💿 Install GitHub CLI"
 brew install gh
 echo "✅ GitHub CLI is installed"

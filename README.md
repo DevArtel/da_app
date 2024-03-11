@@ -32,7 +32,7 @@ You must specify a build flavor to run the app.
     - Find "Edit configurations..." menu
     - Chose a configuration you want to launch
     - Set required flavor in "Build flavor" property.
-
+ 
 ### Startup initializing
 
 In order to initialize dependencies that you need before the app startup, we have `startup` package.

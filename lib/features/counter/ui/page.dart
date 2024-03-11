@@ -2,6 +2,7 @@ import 'package:da_app/common/l10n/l10n.dart';
 import 'package:da_app/common/utils/flavor.dart';
 import 'package:da_app/features/counter/provider/provider.dart';
 import 'package:da_app/features/startup/provider/provider.dart';
+import 'package:da_app/resources/assets.gen.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ui_kit/ui_kit.dart';

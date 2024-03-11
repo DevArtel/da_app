@@ -40,7 +40,13 @@ tasks:
     desc: '👷 Run build_runner'
     aliases: [ genc ]
     cmds:
-      - ./flutterw packages pub run build_runner build --delete-conflicting-outputs
+      - ./dartw run build_runner build --delete-conflicting-outputs
+      - task: generate-code-ui-kit
+
+  generate-code-ui-kit:
+    desc: '👷 Run build_runner in ui_kit'
+    cmd: ./dartw run build_runner build --delete-conflicting-outputs
+    dir: packages/ui_kit
 
   generate:
     desc: '🚧 Generate everything'
@@ -49,7 +55,6 @@ tasks:
       - task: clean-generated
       - task: generate-localization
       - task: generate-code
-      # - task: generate-icons
       - task: format
 
   analyze:

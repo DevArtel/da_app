@@ -1,6 +1,6 @@
 // This is a generated file; do not edit or check into version control.
-FLUTTER_ROOT=/Users/admin/dev/bin/flutter
-FLUTTER_APPLICATION_PATH=/Users/admin/dev/projects/DevArtel/da_app
+FLUTTER_ROOT=/Users/vasya/fvm/versions/3.16.8
+FLUTTER_APPLICATION_PATH=/Users/vasya/develop/projects/devartel/da_app
 COCOAPODS_PARALLEL_CODE_SIGN=true
 FLUTTER_BUILD_DIR=build
 FLUTTER_BUILD_NAME=1.0.0
