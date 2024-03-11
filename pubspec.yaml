@@ -19,12 +19,14 @@ dependencies:
   go_router: 10.0.0
   cached_network_image: 3.2.3
   flutter_hooks: 0.18.1
-  hooks_riverpod: 2.3.7
+  hooks_riverpod: 2.4.10
+  riverpod_annotation: 2.3.4
   ui_kit:
     path: packages/ui_kit
   logger:
     path: packages/logger
-  firebase_core: 2.24.0
+  firebase_core: 2.24.2
+  shared_preferences: 2.2.2
   flutter_svg: 2.0.10+1
 
 dev_dependencies:
@@ -38,6 +40,9 @@ dev_dependencies:
     git:
       url: https://github.com/DevArtel/devartel_analysis.git
       ref: v3.0.0
+
+  riverpod_generator: 2.3.11
+  riverpod_lint: 2.3.9
 
 flutter:
   uses-material-design: true

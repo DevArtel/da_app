@@ -33,6 +33,7 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+**/build/
 /coverage
 
 # Secrets
@@ -57,3 +58,7 @@ app.*.map.json
 
 # FVM-related
 .fvm/flutter_sdk
+
+# Generated .g, .freezed
+**/*.g.dart
+**/*.freezed.dart
