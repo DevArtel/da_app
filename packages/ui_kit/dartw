@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Check if any command is passed as an argument
+if [ $# -eq 0 ]; then
+    exit 1
+fi
+
+# Check if fvm command exists
+if command -v fvm >/dev/null 2>&1; then
+    fvm dart "$@"
+else
+    dart "$@"
+fi

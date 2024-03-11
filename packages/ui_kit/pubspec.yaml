@@ -14,10 +14,13 @@ dependencies:
     sdk: flutter
   intl: 0.18.1
   cached_network_image: ^3.2.3
+  flutter_svg: 2.0.10+1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  build_runner: 2.4.6
+  flutter_gen_runner: 5.4.0
   devartel_analysis:
     git:
       url: https://github.com/DevArtel/devartel_analysis.git
@@ -26,3 +29,16 @@ dev_dependencies:
 flutter:
   generate: true
   uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/animations/
+
+flutter_gen:
+  output: lib/src/resources
+  line_length: 120
+
+  integrations:
+    flutter_svg: true
+    flare_flutter: true
+    rive: true
+    lottie: true
