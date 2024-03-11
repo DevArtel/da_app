@@ -1,5 +1,21 @@
 import 'package:da_app/common/errors/app_exception.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+part 'flavor.g.dart';
+
+@Riverpod(keepAlive: true)
+Future<Flavor> flavor(FlavorRef ref) async {
+  if (kIsWeb) {
+    return kDebugMode ? Flavor.staging : Flavor.prod;
+  } else {
+    final detector = FlavorDetector();
+    await detector.init();
+
+    return detector.flavor;
+  }
+}
 
 const _flavorChanel = MethodChannel('flavor_channel');
 

@@ -1,14 +1,22 @@
 import 'package:da_app/common/utils/flavor.dart';
+import 'package:da_app/common/utils/preferences.dart';
 import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'provider.g.dart';
 
+/// Register providers that must be initialized before the app startup
 final startupProviders = [
   flavorProvider,
   sharedPreferencesProvider,
 ];
+
+/// Run initialization of non-provider components that must be initialized
+/// before the app startup. E.g. Firebase SDK.
+Future<void> initDependencies() async {
+  // TODO: add dependencies initializing
+}
 
 @Riverpod(keepAlive: true)
 Future<void> appStartup(AppStartupRef ref) async {
@@ -21,25 +29,9 @@ Future<void> appStartup(AppStartupRef ref) async {
   for (final provider in startupProviders) {
     await ref.watch(provider.future);
   }
+
+  await initDependencies();
 }
 
 Future<void> _initDependencies() async {
-  // await Firebase.initializeApp( //todo enable web
-  //   options: DefaultFirebaseOptions.currentPlatform,
-  // );
-}
-
-@Riverpod(keepAlive: true)
-Future<SharedPreferences> sharedPreferences(SharedPreferencesRef ref) => SharedPreferences.getInstance();
-
-@Riverpod(keepAlive: true)
-Future<Flavor> flavor(FlavorRef ref) async {
-  if (kIsWeb) {
-    return kDebugMode ? Flavor.staging : Flavor.prod;
-  } else {
-    final detector = FlavorDetector();
-    await detector.init();
-
-    return detector.flavor;
-  }
 }

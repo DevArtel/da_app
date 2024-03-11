@@ -33,6 +33,15 @@ You must specify a build flavor to run the app.
     - Chose a configuration you want to launch
     - Set required flavor in "Build flavor" property.
 
+### Startup initializing
+
+In order to initialize dependencies that you need before the app startup, we have `startup` package.
+In `startup/provider.dart` you can:
+1. List providers that must be init at the app startup
+2. Init other, non-provider dependencies, like Firebase App.
+
+`startup/ui` package has prepared widgets for loading, data and error states of the startup process.
+
 ### Applying changes from da_app
 
 If you want to update your project with the latest changes from da_app template, do this:
