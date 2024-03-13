@@ -1,0 +1,9 @@
+include: package:flutter_lints/flutter.yaml
+
+# ignore generated
+ignore:
+  - lib/generated/**
+  - lib/src/generated/**
+  - lib/*.g.dart
+  - lib/*.freezed.dart
+  - lib/*.freez.dart
