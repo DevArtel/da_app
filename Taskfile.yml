@@ -42,11 +42,17 @@ tasks:
     cmds:
       - ./dartw run build_runner build --delete-conflicting-outputs
       - task: generate-code-ui-kit
+      - task: generate-code-storybook
 
   generate-code-ui-kit:
     desc: '👷 Run build_runner in ui_kit'
     cmd: ./dartw run build_runner build --delete-conflicting-outputs
     dir: packages/ui_kit
+
+  generate-code-storybook:
+    desc: '👷 Run build_runner in storybook'
+    cmd: ./dartw run build_runner build --delete-conflicting-outputs
+    dir: storybook
 
   generate:
     desc: '🚧 Generate everything'
