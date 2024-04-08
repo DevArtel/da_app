@@ -11,7 +11,7 @@ class CounterText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Text(
-        UiLocalizations.of(context)!.counterValue(value),
+        UiLocalizations.of(context).counterValue(value),
         style: context.appTheme.textStyles.body.copyWith(
           color: context.appTheme.colors.textPrimary,
         ),

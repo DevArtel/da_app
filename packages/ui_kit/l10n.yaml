@@ -3,3 +3,5 @@ template-arb-file: app_en.arb
 output-localization-file: app_localizations.dart
 output-class: UiLocalizations
 synthetic-package: false
+format: true
+nullable-getter: false

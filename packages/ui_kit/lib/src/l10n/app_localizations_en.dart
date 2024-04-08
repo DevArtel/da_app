@@ -1,4 +1,4 @@
-import 'package:ui_kit/src/l10n/app_localizations.dart';
+import 'app_localizations.dart';
 
 /// The translations for English (`en`).
 class UiLocalizationsEn extends UiLocalizations {
