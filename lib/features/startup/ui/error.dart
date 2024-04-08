@@ -25,7 +25,7 @@ class AppStartupError extends ConsumerWidget {
                   onPressed: () {
                     ref.invalidate(appStartupProvider);
                   },
-                  child: Text(AppLocalizations.of(context)!.retry),
+                  child: Text(AppLocalizations.of(context).retry),
                 ),
               ],
             ),

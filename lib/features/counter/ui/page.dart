@@ -19,7 +19,7 @@ class CounterPage extends ConsumerWidget {
       location: BannerLocation.topEnd,
       child: Scaffold(
         appBar: AppBar(
-          title: AppBarTitle(text: AppLocalizations.of(context)!.counterPageTitle),
+          title: AppBarTitle(text: AppLocalizations.of(context).counterPageTitle),
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: counterNotifier.increment,
