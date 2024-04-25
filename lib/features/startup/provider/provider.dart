@@ -1,8 +1,8 @@
+import 'package:da_app/common/firebase_options.dart';
 import 'package:da_app/common/utils/flavor.dart';
 import 'package:da_app/common/utils/preferences.dart';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'provider.g.dart';
 
@@ -16,6 +16,10 @@ final startupProviders = [
 /// before the app startup. E.g. Firebase SDK.
 Future<void> initDependencies() async {
   // TODO: add dependencies initializing
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
 
 @Riverpod(keepAlive: true)

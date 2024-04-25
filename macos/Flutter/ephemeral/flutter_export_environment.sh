@@ -1,6 +1,6 @@
 #!/bin/sh
 # This is a generated file; do not edit or check into version control.
-export "FLUTTER_ROOT=/Users/vasya/fvm/versions/3.16.8"
+export "FLUTTER_ROOT=/Users/vasya/fvm/versions/3.19.6"
 export "FLUTTER_APPLICATION_PATH=/Users/vasya/develop/projects/devartel/da_app"
 export "COCOAPODS_PARALLEL_CODE_SIGN=true"
 export "FLUTTER_BUILD_DIR=build"

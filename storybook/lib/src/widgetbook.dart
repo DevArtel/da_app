@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:storybook/src/widgetbook.directories.g.dart';
 import 'package:ui_kit/ui_kit.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
-
-import 'widgetbook.directories.g.dart';
 
 final _textScaleAddon = TextScaleAddon(
   scales: [1.0, 1.5, 2.0],

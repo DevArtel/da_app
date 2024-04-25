@@ -57,8 +57,10 @@ app.*.map.json
 /ios/Runner.ipa
 
 # FVM-related
-.fvm/flutter_sdk
 
 # Generated .g, .freezed
 **/*.g.dart
 **/*.freezed.dart
+
+# FVM Version Cache
+.fvm/
