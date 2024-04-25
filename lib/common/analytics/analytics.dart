@@ -1,13 +1,9 @@
-abstract class AnalyticsEvent {}
-
-abstract class AnalyticsUser {}
+typedef AnalyticsAttributes = Map<String, dynamic>;
 
 abstract interface class AnalyticsTracker {
-  void setUser(AnalyticsUser? user);
+  void setUser(String userId, [AnalyticsAttributes? attributes]);
 
-  void addBreadcrumb(String breadcrumb);
-
-  void trackEvent(AnalyticsEvent event);
+  void trackEvent(String name, [AnalyticsAttributes? attributes]);
 }
 
 class AnalyticsService implements AnalyticsTracker {
@@ -18,23 +14,16 @@ class AnalyticsService implements AnalyticsTracker {
   }
 
   @override
-  void setUser(AnalyticsUser? user) {
+  void setUser(String userId, [Map<String, dynamic>? attributes]) {
     for (final tracker in _trackers) {
-      tracker.setUser(user);
+      tracker.setUser(userId, attributes);
     }
   }
 
   @override
-  void addBreadcrumb(String breadcrumb) {
+  void trackEvent(String name, [AnalyticsAttributes? attributes]) {
     for (final tracker in _trackers) {
-      tracker.addBreadcrumb(breadcrumb);
-    }
-  }
-
-  @override
-  void trackEvent(AnalyticsEvent event) {
-    for (final tracker in _trackers) {
-      tracker.trackEvent(event);
+      tracker.trackEvent(name, attributes);
     }
   }
 }

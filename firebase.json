@@ -6,5 +6,34 @@
       "**/.*",
       "**/node_modules/**"
     ]
+  },
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "da-app-2b7e1",
+          "appId": "1:614292160353:android:cda1f697d3828b94130f20",
+          "fileOutput": "android/app/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "da-app-2b7e1",
+          "appId": "1:614292160353:ios:7e79015086670c7a130f20",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "da-app-2b7e1",
+          "configurations": {
+            "android": "1:614292160353:android:cda1f697d3828b94130f20",
+            "ios": "1:614292160353:ios:7e79015086670c7a130f20",
+            "web": "1:614292160353:web:6a663dcd93a29ec5130f20"
+          }
+        }
+      }
+    }
   }
 }
