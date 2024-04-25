@@ -59,8 +59,7 @@ import 'app_localizations_en.dart';
 /// be consistent with the languages listed in the UiLocalizations.supportedLocales
 /// property.
 abstract class UiLocalizations {
-  UiLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+  UiLocalizations(String locale) : localeName = intl.Intl.canonicalizedLocale(locale.toString());
 
   final String localeName;
 
@@ -68,8 +67,7 @@ abstract class UiLocalizations {
     return Localizations.of<UiLocalizations>(context, UiLocalizations)!;
   }
 
-  static const LocalizationsDelegate<UiLocalizations> delegate =
-      _UiLocalizationsDelegate();
+  static const LocalizationsDelegate<UiLocalizations> delegate = _UiLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -81,8 +79,7 @@ abstract class UiLocalizations {
   /// Additional delegates can be added by appending to this list in
   /// MaterialApp. This list does not have to be used at all if a custom list
   /// of delegates is preferred or required.
-  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates =
-      <LocalizationsDelegate<dynamic>>[
+  static const List<LocalizationsDelegate<dynamic>> localizationsDelegates = <LocalizationsDelegate<dynamic>>[
     delegate,
     GlobalMaterialLocalizations.delegate,
     GlobalCupertinoLocalizations.delegate,
@@ -108,8 +105,7 @@ class _UiLocalizationsDelegate extends LocalizationsDelegate<UiLocalizations> {
   }
 
   @override
-  bool isSupported(Locale locale) =>
-      <String>['en'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_UiLocalizationsDelegate old) => false;
@@ -122,8 +118,7 @@ UiLocalizations lookupUiLocalizations(Locale locale) {
       return UiLocalizationsEn();
   }
 
-  throw FlutterError(
-      'UiLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+  throw FlutterError('UiLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
       'an issue with the localizations generation tool. Please file an issue '
       'on GitHub with a reproducible sample app and the gen-l10n configuration '
       'that was used.');
