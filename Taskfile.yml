@@ -55,6 +55,10 @@ tasks:
     cmd: ./dartw run build_runner build --delete-conflicting-outputs
     dir: storybook
 
+  generate-splash:
+    desc: '🎨 Generate native code for Splash screen'
+    cmd: ./dartw run flutter_native_splash:create
+
   generate:
     desc: '🚧 Generate everything'
     aliases: [ gen ]
@@ -62,6 +66,7 @@ tasks:
       - task: clean-generated
       - task: generate-localization
       - task: generate-code
+      - task: generate-splash
       - task: format
 
   analyze:
