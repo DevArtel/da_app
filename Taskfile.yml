@@ -30,6 +30,11 @@ tasks:
     cmds:
       - ./dartw format -l 120 .
 
+  fix:
+    desc: '️👨‍🔧 Fix lint problems'
+    cmds:
+      - ./dartw fix --apply
+
   generate-localization:
     desc: '🎌️ Generate l10n'
     aliases: [ genloc ]
