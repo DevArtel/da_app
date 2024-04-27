@@ -1,3 +1,4 @@
+import 'package:da_app/common/errors/error_tracker.dart';
 import 'package:da_app/common/firebase_options.dart';
 import 'package:da_app/common/utils/flavor.dart';
 import 'package:da_app/common/utils/preferences.dart';
@@ -20,6 +21,8 @@ Future<void> initDependencies() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
+  ErrorTracker.init();
 }
 
 @Riverpod(keepAlive: true)
@@ -28,13 +31,9 @@ Future<void> appStartup(AppStartupRef ref) async {
     startupProviders.forEach(ref.invalidate);
   });
 
-  await _initDependencies();
+  await initDependencies();
 
   for (final provider in startupProviders) {
     await ref.watch(provider.future);
   }
-
-  await initDependencies();
 }
-
-Future<void> _initDependencies() async {}
