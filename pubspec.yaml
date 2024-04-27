@@ -27,6 +27,7 @@ dependencies:
     path: packages/logger
   firebase_core: 2.30.1
   firebase_analytics: 10.10.4
+  firebase_crashlytics: 3.5.4
   shared_preferences: 2.2.2
   flutter_svg: 2.0.10+1
   flutter_native_splash: 2.4.0
