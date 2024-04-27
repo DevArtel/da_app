@@ -29,6 +29,7 @@ dependencies:
   firebase_analytics: 10.10.4
   shared_preferences: 2.2.2
   flutter_svg: 2.0.10+1
+  flutter_native_splash: 2.4.0
 
 dev_dependencies:
   flutter_test:
