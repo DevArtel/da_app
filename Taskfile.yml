@@ -68,6 +68,8 @@ tasks:
     desc: '🚧 Generate everything'
     aliases: [ gen ]
     cmds:
+      # First step is a fix for this issue: https://github.com/dart-lang/build/issues/2835
+      - rm .dart_tool/package_config.json
       - task: clean-generated
       - task: generate-localization
       - task: generate-code
