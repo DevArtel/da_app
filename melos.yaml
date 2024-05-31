@@ -9,12 +9,12 @@ scripts:
     description: "‍🍳 Prepare the project for hacking"
     failFast: true
     run: |
-      melos clean
-      melos bs
-      melos gen
-      melos prepare:ios
-      melos format
-      melos fix
+      melos clean &&
+      melos bs &&
+      melos gen &&
+      melos prepare:ios &&
+      melos format &&
+      melos fix &&
       melos analyze
 
   prepare:ios:
@@ -24,8 +24,8 @@ scripts:
     packageFilters:
       fileExists: "ios/Podfile"
     exec: |
-      cd ios
-      flutter precache --ios
+      cd ios &&
+      flutter precache --ios &&
       pod install --repo-update
 
   gen:loc:
@@ -62,29 +62,36 @@ scripts:
     description: "🤖 Build Android app"
     failFast: true
     run: |
-      cd apps/app
+      cd apps/app &&
       flutter build ${PACKAGE_FORMAT:-apk} --flavor $FLAVOR --build-number=$BUILD_NUMBER --build-name=$BUILD_NAME
 
   build:ios:
     description: "🍏 Build iOS app"
     failFast: true
     run: |
-      cd apps/app
+      cd apps/app &&
       flutter build ios --flavor $FLAVOR --build-number=$BUILD_NUMBER --build-name=$BUILD_NAME
 
   storybook:build:
     description: "🧚 Build Storybook for production"
     failFast: true
     run: |
-      cd apps/storybook
+      cd apps/storybook &&
       flutter build web
 
   storybook:run:
     description: "✨ Run Storybook in browser"
     failFast: true
     run: |
-      cd apps/storybook
+      cd apps/storybook &&
       flutter run -d chrome
+
+  gh:set-secrets:
+    description: "🤐 Set GitHub Actions Secrets from ./github/.env"
+    failFast: true
+    run: |
+      cd .github &&
+      gh secret set -f .env
 
 command:
   clean:
