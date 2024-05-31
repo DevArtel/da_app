@@ -12,12 +12,23 @@ scripts:
       melos clean
       melos bs
       melos gen
-      melos prepare-ios
+      melos prepare:ios
       melos format
       melos fix
       melos analyze
 
-  gen-loc:
+  prepare:ios:
+    description: "🥜 Prepare iOS: install cocoa pods"
+    failFast: true
+    concurrency: 1
+    packageFilters:
+      fileExists: "ios/Podfile"
+    exec: |
+      cd ios
+      flutter precache --ios
+      pod install --repo-update
+
+  gen:loc:
     description: "🎌️ Generate localization"
     failFast: true
     concurrency: 1
@@ -27,7 +38,7 @@ scripts:
       dependsOn: "flutter_localizations"
     exec: flutter gen-l10n
 
-  gen-code:
+  gen:code:
     description: "👷 Generate code"
     failFast: true
     concurrency: 1
@@ -39,24 +50,27 @@ scripts:
   gen:
     description: "🚧 Generate everything"
     run: |
-      melos gen-code --no-select
-      melos gen-loc --no-select
+      melos gen:code --no-select
+      melos gen:loc --no-select
 
   fix:
     description: "🔧 Fix lint problems"
     failFast: true
     exec: dart fix --apply
 
-  prepare-ios:
-    description: "🥜 Prepare iOS: install cocoa pods"
+  build:android:
+    description: "🤖 Build Android app"
     failFast: true
-    concurrency: 1
-    packageFilters:
-      fileExists: "ios/Podfile"
-    exec: |
-      cd ios
-      flutter precache --ios
-      pod install --repo-update
+    run: |
+      cd apps/app
+      flutter build ${PACKAGE_FORMAT:-apk} --flavor $FLAVOR --build-number=$BUILD_NUMBER --build-name=$BUILD_NAME
+
+  build:ios:
+    description: "🍏 Build iOS app"
+    failFast: true
+    run: |
+      cd apps/app
+      flutter build ios --flavor $FLAVOR --build-number=$BUILD_NUMBER --build-name=$BUILD_NAME
 
 command:
   clean:
