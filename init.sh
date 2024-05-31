@@ -2,14 +2,9 @@
 
 set -eo pipefail
 
-echo "💿 Install FVM"
-brew tap leoafarias/fvm
-brew install fvm
-echo "✅ FVM is installed"
-
-echo "💿 Install Task"
-brew install go-task/tap/go-task
-echo "✅ Task is installed"
+echo "💿 Install Melos"
+dart pub global activate melos
+echo "✅ Melos is installed"
 
 echo "💿 Install Fluttergen"
 dart pub global activate flutter_gen
@@ -25,10 +20,7 @@ brew link --overwrite cocoapods
 echo "✅ Cocoapods is installed"
 
 echo "🧑‍🍳 Prepare project"
-task prepare
-
-echo "🍫 Install pods"
-task pod-install
+melos prepare
 
 echo " ✧ ██████╗  █████╗      █████╗ ██████╗ ██████╗"
 echo "   ██╔══██╗██╔══██╗  ✧ ██╔══██╗██╔══██╗██╔══██╗"
@@ -37,4 +29,4 @@ echo "✧  ██║  ██║██╔══██║    ██╔══██
 echo "   ██████╔╝██║  ██║    ██║  ██║██║  ✧  ██║"
 echo "   ╚═════╝ ╚═╝  ╚═╝ ✧  ╚═╝  ╚═╝╚═╝     ╚═╝   ✨"
 
-task --list-all
+melos run

@@ -1,0 +1,60 @@
+name: da_app
+description: A new Flutter project.
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: 3.4.1
+  flutter: 3.22.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+    
+  intl: any
+  collection: any
+  meta: any
+  go_router: 14.1.4
+  cached_network_image: 3.3.1
+  flutter_hooks: 0.20.5
+  hooks_riverpod: 2.5.1
+  riverpod_annotation: 2.3.5
+  ui_kit: 0.0.1
+  logger: 0.0.1
+  firebase_core: 2.32.0
+  firebase_analytics: 10.10.7
+  firebase_crashlytics: 3.5.7
+  shared_preferences: 2.2.3
+  flutter_svg: 2.0.10+1
+  flutter_native_splash: 2.4.0
+
+  vector_graphics: any
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  build_runner: 2.4.10
+  flutter_gen_runner: 5.5.0+1
+
+  devartel_analysis:
+    git:
+      url: https://github.com/DevArtel/devartel_analysis.git
+      ref: v3.0.0
+
+  riverpod_generator: 2.4.0
+  riverpod_lint: 2.3.10
+
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/images/
+
+flutter_gen:
+  output: lib/resources
+  line_length: 120
+
+  integrations:
+    flutter_svg: true
