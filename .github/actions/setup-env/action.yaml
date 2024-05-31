@@ -16,10 +16,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: '🔧 Load fvm config'
-      uses: kuhnroyal/flutter-fvm-config-action@v1
-      if: ${{ inputs.install-flutter == 'true' }}
-
     - name: '🌍 Load .env file'
       uses: xom9ikk/dotenv@v2
       with:
