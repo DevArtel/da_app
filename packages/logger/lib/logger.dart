@@ -42,7 +42,8 @@ void setupLogger() {
 
 /// Appender which outputs all log records using the given formatter using dart:developer log function.
 class DeveloperLogAppender extends BaseLogAppender {
-  DeveloperLogAppender({LogRecordFormatter? formatter}) : super(formatter ?? const DefaultLogRecordFormatter());
+  DeveloperLogAppender({LogRecordFormatter? formatter})
+      : super(formatter ?? const DefaultLogRecordFormatter());
 
   static DeveloperLogAppender setupLogging({
     Level level = Level.ALL,

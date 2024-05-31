@@ -1,0 +1,6 @@
+# melos_managed_dependency_overrides: logger,ui_kit
+dependency_overrides:
+  logger:
+    path: ../../packages/logger
+  ui_kit:
+    path: ../../packages/ui_kit

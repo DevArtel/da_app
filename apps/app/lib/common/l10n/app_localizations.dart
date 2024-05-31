@@ -1,16 +1,15 @@
 import 'dart:async';
 
+import 'package:da_app/common/l10n/app_localizations_en.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
-import 'app_localizations_en.dart';
-
-/// Callers can lookup localized strings with an instance of UiLocalizations
-/// returned by `UiLocalizations.of(context)`.
+/// Callers can lookup localized strings with an instance of AppLocalizations
+/// returned by `AppLocalizations.of(context)`.
 ///
-/// Applications need to include `UiLocalizations.delegate()` in their app's
+/// Applications need to include `AppLocalizations.delegate()` in their app's
 /// `localizationDelegates` list, and the locales they support in the app's
 /// `supportedLocales` list. For example:
 ///
@@ -18,8 +17,8 @@ import 'app_localizations_en.dart';
 /// import 'l10n/app_localizations.dart';
 ///
 /// return MaterialApp(
-///   localizationsDelegates: UiLocalizations.localizationsDelegates,
-///   supportedLocales: UiLocalizations.supportedLocales,
+///   localizationsDelegates: AppLocalizations.localizationsDelegates,
+///   supportedLocales: AppLocalizations.supportedLocales,
 ///   home: MyApplicationHome(),
 /// );
 /// ```
@@ -56,20 +55,20 @@ import 'app_localizations_en.dart';
 /// Select and expand the newly-created Localizations item then, for each
 /// locale your application supports, add a new item and select the locale
 /// you wish to add from the pop-up menu in the Value field. This list should
-/// be consistent with the languages listed in the UiLocalizations.supportedLocales
+/// be consistent with the languages listed in the AppLocalizations.supportedLocales
 /// property.
-abstract class UiLocalizations {
-  UiLocalizations(String locale)
-      : localeName = intl.Intl.canonicalizedLocale(locale.toString());
+abstract class AppLocalizations {
+  AppLocalizations(String locale)
+      : localeName = intl.Intl.canonicalizedLocale(locale);
 
   final String localeName;
 
-  static UiLocalizations of(BuildContext context) {
-    return Localizations.of<UiLocalizations>(context, UiLocalizations)!;
+  static AppLocalizations of(BuildContext context) {
+    return Localizations.of<AppLocalizations>(context, AppLocalizations)!;
   }
 
-  static const LocalizationsDelegate<UiLocalizations> delegate =
-      _UiLocalizationsDelegate();
+  static const LocalizationsDelegate<AppLocalizations> delegate =
+      _AppLocalizationsDelegate();
 
   /// A list of this localizations delegate along with the default localizations
   /// delegates.
@@ -92,19 +91,26 @@ abstract class UiLocalizations {
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[Locale('en')];
 
-  /// No description provided for @counterValue.
+  /// No description provided for @counterPageTitle.
   ///
   /// In en, this message translates to:
-  /// **'Value is {value}'**
-  String counterValue(Object value);
+  /// **'Counter'**
+  String get counterPageTitle;
+
+  /// No description provided for @retry.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
 }
 
-class _UiLocalizationsDelegate extends LocalizationsDelegate<UiLocalizations> {
-  const _UiLocalizationsDelegate();
+class _AppLocalizationsDelegate
+    extends LocalizationsDelegate<AppLocalizations> {
+  const _AppLocalizationsDelegate();
 
   @override
-  Future<UiLocalizations> load(Locale locale) {
-    return SynchronousFuture<UiLocalizations>(lookupUiLocalizations(locale));
+  Future<AppLocalizations> load(Locale locale) {
+    return SynchronousFuture<AppLocalizations>(lookupAppLocalizations(locale));
   }
 
   @override
@@ -112,18 +118,18 @@ class _UiLocalizationsDelegate extends LocalizationsDelegate<UiLocalizations> {
       <String>['en'].contains(locale.languageCode);
 
   @override
-  bool shouldReload(_UiLocalizationsDelegate old) => false;
+  bool shouldReload(_AppLocalizationsDelegate old) => false;
 }
 
-UiLocalizations lookupUiLocalizations(Locale locale) {
+AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en':
-      return UiLocalizationsEn();
+      return AppLocalizationsEn();
   }
 
   throw FlutterError(
-      'UiLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
+      'AppLocalizations.delegate failed to load unsupported locale "$locale". This is likely '
       'an issue with the localizations generation tool. Please file an issue '
       'on GitHub with a reproducible sample app and the gen-l10n configuration '
       'that was used.');

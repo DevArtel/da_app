@@ -8,13 +8,17 @@ class AppTheme {
   static ThemeData get light {
     const semanticColors = AppColors.light;
 
-    return ThemeData.light()._applyColors(semanticColors)._applyExtensions(semanticColors);
+    return ThemeData.light()
+        ._applyColors(semanticColors)
+        ._applyExtensions(semanticColors);
   }
 
   static ThemeData get dark {
     const semanticColors = AppColors.dark;
 
-    return ThemeData.dark()._applyColors(semanticColors)._applyExtensions(semanticColors);
+    return ThemeData.dark()
+        ._applyColors(semanticColors)
+        ._applyExtensions(semanticColors);
   }
 }
 
@@ -46,7 +50,8 @@ class ThemeDelegate {
 
   final BuildContext _context;
 
-  AppTextStyles get textStyles => Theme.of(_context).extension<AppTextStyles>()!;
+  AppTextStyles get textStyles =>
+      Theme.of(_context).extension<AppTextStyles>()!;
 
   AppColors get colors => Theme.of(_context).extension<AppColors>()!;
 }

@@ -1,0 +1,67 @@
+name: da_project
+
+packages:
+  - apps/**
+  - packages/**
+
+scripts:
+  prepare:
+    description: "‍🍳 Prepare the project for hacking"
+    failFast: true
+    run: |
+      melos clean
+      melos bs
+      melos gen
+      melos prepare-ios
+      melos format
+      melos fix
+      melos analyze
+
+  gen-loc:
+    description: "🎌️ Generate localization"
+    failFast: true
+    concurrency: 1
+    orderDependents: true
+    packageFilters:
+      fileExists: l10n.yaml
+      dependsOn: "flutter_localizations"
+    exec: flutter gen-l10n
+
+  gen-code:
+    description: "👷 Generate code"
+    failFast: true
+    concurrency: 1
+    orderDependents: true
+    packageFilters:
+      dependsOn: "build_runner"
+    exec: dart run build_runner build --delete-conflicting-outputs
+
+  gen:
+    description: "🚧 Generate everything"
+    run: |
+      melos gen-code --no-select
+      melos gen-loc --no-select
+
+  fix:
+    description: "🔧 Fix lint problems"
+    failFast: true
+    exec: dart fix --apply
+
+  prepare-ios:
+    description: "🥜 Prepare iOS: install cocoa pods"
+    failFast: true
+    concurrency: 1
+    packageFilters:
+      fileExists: "ios/Podfile"
+    exec: |
+      cd ios
+      flutter precache --ios
+      pod install --repo-update
+
+command:
+  clean:
+    hooks:
+      post: |
+        find -E . -regex ".*\.(g|freezed|gen)\.dart" -type f -delete && 
+        find -E . -name "*.lock" -type f -delete && 
+        cd apps/app/ios && pod cache clean --all && cd ../../..

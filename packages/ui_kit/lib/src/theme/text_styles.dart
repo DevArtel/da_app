@@ -27,5 +27,7 @@ class AppTextStyles extends ThemeExtension<AppTextStyles> {
   ThemeExtension<AppTextStyles> copyWith() => this;
 
   @override
-  ThemeExtension<AppTextStyles> lerp(ThemeExtension<AppTextStyles>? other, double t) => this;
+  ThemeExtension<AppTextStyles> lerp(
+          ThemeExtension<AppTextStyles>? other, double t) =>
+      this;
 }

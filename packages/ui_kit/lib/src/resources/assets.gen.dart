@@ -15,7 +15,8 @@ class $AssetsImagesGen {
   const $AssetsImagesGen();
 
   /// File path: assets/images/ic_profile.svg
-  SvgGenImage get icProfile => const SvgGenImage('assets/images/ic_profile.svg');
+  SvgGenImage get icProfile =>
+      const SvgGenImage('assets/images/ic_profile.svg');
 
   /// List of all assets
   List<SvgGenImage> get values => [icProfile];
