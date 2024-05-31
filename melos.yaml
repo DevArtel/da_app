@@ -38,6 +38,12 @@ scripts:
       dependsOn: "flutter_localizations"
     exec: flutter gen-l10n
 
+  gen:prepare:
+    description: "🧩 Install dependencies required for codegen"
+    failFast: true
+    run: |
+      dart pub global activate flutter_gen
+
   gen:code:
     description: "👷 Generate code"
     failFast: true
@@ -50,6 +56,7 @@ scripts:
   gen:
     description: "🚧 Generate everything"
     run: |
+      melos gen:prepare
       melos gen:code --no-select
       melos gen:loc --no-select
 

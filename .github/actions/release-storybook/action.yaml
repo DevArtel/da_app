@@ -18,7 +18,6 @@ runs:
       uses: ./.github/actions/setup-env
       with:
         install-ruby: 'false'
-        install-protoc: 'false'
         repo-token: ${{ inputs.repo-token }}
     - name: 'Build Storybook'
       run: task storybook-build
