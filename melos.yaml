@@ -72,6 +72,20 @@ scripts:
       cd apps/app
       flutter build ios --flavor $FLAVOR --build-number=$BUILD_NUMBER --build-name=$BUILD_NAME
 
+  storybook:build:
+    description: "🧚 Build Storybook for production"
+    failFast: true
+    run: |
+      cd apps/storybook
+      flutter build web
+
+  storybook:run:
+    description: "✨ Run Storybook in browser"
+    failFast: true
+    run: |
+      cd apps/storybook
+      flutter run -d chrome
+
 command:
   clean:
     hooks:
