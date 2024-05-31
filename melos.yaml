@@ -104,6 +104,5 @@ command:
   clean:
     hooks:
       post: |
-        find -E . -regex ".*\.(g|freezed|gen)\.dart" -type f -delete && 
-        find -E . -name "*.lock" -type f -delete && 
+        find . -type f \( -name \*.g.dart -o -name \*.freezed.dart -o -name \*.gen.dart -o -name \*.lock \) -delete && 
         cd apps/app/ios && pod cache clean --all && cd ../../..
