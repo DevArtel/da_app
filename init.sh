@@ -22,9 +22,6 @@ echo "✅ Cocoapods is installed"
 echo "🧑‍🍳 Prepare project"
 melos prepare
 
-echo "🍫 Install pods"
-melos pod-install
-
 echo " ✧ ██████╗  █████╗      █████╗ ██████╗ ██████╗"
 echo "   ██╔══██╗██╔══██╗  ✧ ██╔══██╗██╔══██╗██╔══██╗"
 echo "   ██║  ██║███████║    ███████║██████╔╝██████╔╝"
