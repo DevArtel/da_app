@@ -22,4 +22,8 @@ jobs:
         env:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: melos prepare
+        run: |
+          melos clean
+          melos bs
+          melos gen
+          melos check

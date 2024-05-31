@@ -9,12 +9,12 @@ scripts:
     description: "‍🍳 Prepare the project for hacking"
     failFast: true
     run: |
-      melos clean &&
-      melos bs &&
-      melos gen &&
-      melos prepare:ios &&
-      melos format &&
-      melos fix &&
+      melos clean && 
+      melos bs && 
+      melos gen && 
+      melos prepare:ios && 
+      melos format && 
+      melos fix && 
       melos analyze
 
   prepare:ios:
@@ -23,10 +23,7 @@ scripts:
     concurrency: 1
     packageFilters:
       fileExists: "ios/Podfile"
-    exec: |
-      cd ios &&
-      flutter precache --ios &&
-      pod install --repo-update
+    exec: if [[ $OSTYPE == 'darwin'* ]]; then cd ios && flutter precache --ios && pod install --repo-update; else echo "Can only run on macOS"; fi
 
   gen:loc:
     description: "🎌️ Generate localization"
@@ -64,6 +61,13 @@ scripts:
     description: "🔧 Fix lint problems"
     failFast: true
     exec: dart fix --apply
+
+  check:
+    description: "👮 Check problems"
+    failFast: true
+    run: |
+      melos format --set-exit-if-changed && 
+      melos analyze
 
   build:android:
     description: "🤖 Build Android app"
@@ -103,6 +107,4 @@ scripts:
 command:
   clean:
     hooks:
-      post: |
-        find . -type f \( -name \*.g.dart -o -name \*.freezed.dart -o -name \*.gen.dart -o -name \*.lock \) -delete && 
-        cd apps/app/ios && pod cache clean --all && cd ../../..
+      post: bash scripts/post_clean.sh
