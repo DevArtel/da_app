@@ -70,11 +70,18 @@ scripts:
       melos analyze
 
   build:android:
-    description: "🤖 Build Android app"
+    description: "🤖 Build release Android app"
     failFast: true
     run: |
       cd apps/app &&
       flutter build ${PACKAGE_FORMAT:-apk} --flavor $FLAVOR --build-number=$BUILD_NUMBER --build-name=$BUILD_NAME
+
+  build:android:debug:
+    description: "🤖 Build debug Android app"
+    failFast: true
+    run: |
+      cd apps/app &&
+      flutter build apk --flavor ${FLAVOR:-staging} --debug
 
   build:ios:
     description: "🍏 Build iOS app"

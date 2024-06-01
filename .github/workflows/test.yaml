@@ -24,4 +24,4 @@ jobs:
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
           melos prepare
-          FLAVOR=staging BUILD_NUMBER=1 BUILD_NAME=0.0.1 melos build:android
+          FLAVOR=staging BUILD_NUMBER=1 BUILD_NAME=0.0.1 melos build:android:debug
