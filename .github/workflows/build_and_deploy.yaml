@@ -76,11 +76,7 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          BUILD_NAME=${{ inputs.build-name }}
-          BUILD_NUMBER=${{ inputs.build-number }}
-          FLAVOR=${{ inputs.flavor }}
-          PACKAGE_FORMAT=${{ inputs.android-format }}
-          melos build:android
+          BUILD_NAME=${{ inputs.build-name }} BUILD_NUMBER=${{ inputs.build-number }} FLAVOR=${{ inputs.flavor }} PACKAGE_FORMAT=${{ inputs.android-format }} melos build:android
       - name: '🚀 Deploy'
         if: ${{ inputs.deploy }}
         uses: maierj/fastlane-action@v3.0.0
