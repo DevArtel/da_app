@@ -69,8 +69,8 @@ jobs:
           ANDROID_RELEASE_KEY: ${{ secrets.ANDROID_RELEASE_KEY }}
           PLAY_STORE_DEPLOY_JSON: ${{ secrets.PLAY_STORE_DEPLOY_JSON }}
         run: |
-          echo "$ANDROID_RELEASE_KEY" | base64 -d > android/release-keystore.jks
-          echo "$PLAY_STORE_DEPLOY_JSON" | base64 -d > android/play_store_deploy.json
+          echo "$ANDROID_RELEASE_KEY" | base64 -d > apps/app/android/release-keystore.jks
+          echo "$PLAY_STORE_DEPLOY_JSON" | base64 -d > apps/app/android/play_store_deploy.json
       - name: '🏗️ Build'
         env:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -125,7 +125,7 @@ jobs:
           ITUNES_API_KEY_ISSUER_ID: ${{ secrets.ITUNES_API_KEY_ISSUER_ID }}
           ITUNES_API_KEY: ${{ secrets.ITUNES_API_KEY }}
         run: |
-          API_KEY_FILE_NAME="ios/AppStoreConnectAuthKey.p8"
+          API_KEY_FILE_NAME="apps/app/ios/AppStoreConnectAuthKey.p8"
           echo "$ITUNES_API_KEY" | base64 -d > $API_KEY_FILE_NAME
       - name: '🏗️ Flutter build'
         run: |
