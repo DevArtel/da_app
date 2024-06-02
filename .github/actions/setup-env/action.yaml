@@ -45,5 +45,5 @@ runs:
       with:
         ruby-version: ${{ env.RUBY_VERSION }}
         bundler-cache: true
-        working-directory: ${{ runner.os == 'macOS' && 'ios' || 'android' }}
+        working-directory: ${{ runner.os == 'macOS' && 'apps/app/ios' || 'apps/app/android' }}
       if: ${{ inputs.install-ruby == 'true' }}
