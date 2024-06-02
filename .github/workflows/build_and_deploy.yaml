@@ -25,6 +25,8 @@ on:
 
 env:
   DART_ARTIFACT_NAME: dart-code-${{ github.sha }}
+  ANDROID_SUBDIRECTORY: apps/app/android
+  IOS_SUBDIRECTORY: apps/app/ios
 
 jobs:
   prepare:
@@ -85,7 +87,7 @@ jobs:
           FIREBASE_ANDROID_APP_ID: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
         with:
           lane: deploy_${{ inputs.flavor }}
-          subdirectory: 'apps/app/android'
+          subdirectory: ${{ env.ANDROID_SUBDIRECTORY }}
           options: '{"changelog": ${{ inputs.changelog }}}'
 
   deploy-ios:
@@ -114,7 +116,7 @@ jobs:
         uses: maierj/fastlane-action@v3.0.0
         with:
           lane: 'install_${{inputs.flavor}}_profiles'
-          subdirectory: 'ios'
+          subdirectory: ${{ env.IOS_SUBDIRECTORY }}
       - name: '🔑 Extract itunes key'
         env:
           ITUNES_API_KEY_ID: ${{ secrets.ITUNES_API_KEY_ID }}
@@ -130,7 +132,7 @@ jobs:
         uses: maierj/fastlane-action@v3.0.0
         with:
           lane: build
-          subdirectory: 'apps/app/ios'
+          subdirectory: ${{ env.IOS_SUBDIRECTORY }}
           options: '{ "flavor": "${{ inputs.flavor }}" }'
       - name: '🚀 Deploy'
         if: ${{ inputs.deploy }}
@@ -142,5 +144,5 @@ jobs:
           ITUNES_API_KEY_ISSUER_ID: ${{ secrets.ITUNES_API_KEY_ISSUER_ID }}
         with:
           lane: deploy_${{inputs.flavor}}
-          subdirectory: 'ios'
+          subdirectory: ${{ env.IOS_SUBDIRECTORY }}
           options: '{"changelog": ${{ inputs.changelog }}}'
