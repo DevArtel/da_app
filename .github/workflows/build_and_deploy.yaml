@@ -76,11 +76,7 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          BUILD_NAME=${{ inputs.build-name }}
-          BUILD_NUMBER=${{ inputs.build-number }}
-          FLAVOR=${{ inputs.flavor }}
-          PACKAGE_FORMAT=${{ inputs.android-format }}
-          melos build:android
+          BUILD_NAME=${{ inputs.build-name }} BUILD_NUMBER=${{ inputs.build-number }} FLAVOR=${{ inputs.flavor }} PACKAGE_FORMAT=${{ inputs.android-format }} melos build:android
       - name: '🚀 Deploy'
         if: ${{ inputs.deploy }}
         uses: maierj/fastlane-action@v3.0.0
@@ -89,7 +85,7 @@ jobs:
           FIREBASE_ANDROID_APP_ID: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
         with:
           lane: deploy_${{ inputs.flavor }}
-          subdirectory: 'android'
+          subdirectory: 'apps/app/android'
           options: '{"changelog": ${{ inputs.changelog }}}'
 
   deploy-ios:
@@ -129,15 +125,12 @@ jobs:
           echo "$ITUNES_API_KEY" | base64 -d > $API_KEY_FILE_NAME
       - name: '🏗️ Flutter build'
         run: |
-          BUILD_NAME=${{ inputs.build-name }}
-          BUILD_NUMBER=${{ inputs.build-number }}
-          FLAVOR=${{ inputs.flavor }}
-          melos build:ios
+          BUILD_NAME=${{ inputs.build-name }} BUILD_NUMBER=${{ inputs.build-number }} FLAVOR=${{ inputs.flavor }} melos build:ios
       - name: '🏗️ Fastlane build'
         uses: maierj/fastlane-action@v3.0.0
         with:
           lane: build
-          subdirectory: 'ios'
+          subdirectory: 'apps/app/ios'
           options: '{ "flavor": "${{ inputs.flavor }}" }'
       - name: '🚀 Deploy'
         if: ${{ inputs.deploy }}
