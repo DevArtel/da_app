@@ -80,6 +80,7 @@ jobs:
           BUILD_NUMBER=${{ inputs.build-number }}
           FLAVOR=${{ inputs.flavor }}
           PACKAGE_FORMAT=${{ inputs.android-format }}
+          echo "@@ Build $PACKAGE_FORMAT for $FLAVOR: $BUILD_NUMBER – $BUILD_NAME"
           melos build:android
       - name: '🚀 Deploy'
         if: ${{ inputs.deploy }}
