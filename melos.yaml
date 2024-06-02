@@ -85,11 +85,18 @@ scripts:
       flutter build apk --flavor ${FLAVOR:-staging} --debug
 
   build:ios:
-    description: "🍏 Build iOS app"
+    description: "🍏 Build release iOS app"
     failFast: true
     run: |
       cd apps/app &&
       flutter build ios --flavor $FLAVOR --build-number=$BUILD_NUMBER --build-name=$BUILD_NAME
+
+  build:ios:debug:
+    description: "🍏 Build debug iOS app"
+    failFast: true
+    run: |
+      cd apps/app &&
+      flutter build ios --flavor ${FLAVOR:-staging} --debug
 
   storybook:build:
     description: "🧚 Build Storybook for production"
