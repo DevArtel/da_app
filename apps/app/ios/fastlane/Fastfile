@@ -12,7 +12,6 @@ platform :ios do
     install_profile("adhoc", ENV["IOS_BUNDLE_ID"], force, false)
   end
 
-
   lane :build do |options|
     flavor = options[:flavor]
     build_configuration = "Release-#{flavor}"
@@ -52,8 +51,6 @@ platform :ios do
   end
 
   def install_profile(type, app_identifier, force, readonly)
-    puts "git url: #{ENV["MATCH_GIT_URL"]}"
-    puts "app identifier: #{app_identifier}"
     match(
       type: type,
       app_identifier: app_identifier,

@@ -74,7 +74,6 @@ scripts:
     failFast: true
     run: |
       cd apps/app &&
-      echo "@@ Melos says: I'm building $PACKAGE_FORMAT for $FLAVOR: $BUILD_NUMBER – $BUILD_NAME"
       flutter build ${PACKAGE_FORMAT:-apk} --flavor $FLAVOR --build-number=$BUILD_NUMBER --build-name=$BUILD_NAME
 
   build:android:debug:
