@@ -5,10 +5,6 @@ inputs:
     description: "Should install Flutter"
     required: false
     default: 'true'
-  install-protoc:
-    description: "Should install Protoc"
-    required: false
-    default: 'true'
   install-ruby:
     description: "Should install Ruby"
     required: false
@@ -20,10 +16,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: '🔧 Load fvm config'
-      uses: kuhnroyal/flutter-fvm-config-action@v1
-      if: ${{ inputs.install-flutter == 'true' }}
-
     - name: '🌍 Load .env file'
       uses: xom9ikk/dotenv@v2
       with:
@@ -31,14 +23,8 @@ runs:
 
     - run: |
         echo "Should install Flutter ${{ env.FLUTTER_VERSION }}: ${{ inputs.install-flutter == 'true' }}"
-        echo "Should install Protoc ${{ env.PROTOC_VERSION }}: ${{ inputs.install-protoc == 'true' }}"
         echo "Should install Ruby ${{ env.RUBY_VERSION }}: ${{ inputs.install-ruby == 'true' }}"
       shell: bash
-
-    - name: '🤸 Install Task'
-      uses: arduino/setup-task@v1
-      with:
-        repo-token: ${{ inputs.repo-token }}
 
     - name: '🐦️ Setup Flutter'
       id: flutter-action
@@ -49,22 +35,15 @@ runs:
         cache: true
       if: ${{ inputs.install-flutter == 'true' }}
 
-    - name: '🧰 Setup protobuf compiler'
-      uses: arduino/setup-protoc@v1
-      with:
-        version: ${{ env.PROTOC_VERSION }}
-        repo-token: ${{ inputs.repo-token }}
-      if: ${{ inputs.install-protoc == 'true' }}
-
-    - name: '🎯 Setup dart protoc plugin'
-      run: flutter pub global activate protoc_plugin ${{ env.PROTOC_PLUGIN_VERSION }}
+    - name: '🌋 Setup Melos'
+      run: dart pub global activate melos
       shell: bash
-      if: ${{ inputs.install-protoc == 'true' }}
+      if: ${{ inputs.install-flutter == 'true' }}
 
     - name: '💎 Setup Ruby'
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: ${{ env.RUBY_VERSION }}
         bundler-cache: true
-        working-directory: ${{ runner.os == 'macOS' && 'ios' || 'android' }}
+        working-directory: ${{ runner.os == 'macOS' && 'apps/app/ios' || 'apps/app/android' }}
       if: ${{ inputs.install-ruby == 'true' }}

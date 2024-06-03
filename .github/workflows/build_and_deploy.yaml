@@ -25,45 +25,42 @@ on:
 
 env:
   DART_ARTIFACT_NAME: dart-code-${{ github.sha }}
+  ANDROID_SUBDIRECTORY: apps/app/android
+  IOS_SUBDIRECTORY: apps/app/ios
 
 jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
       - name: '🛒 Checkout'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: '💽 Setup environment'
         uses: ./.github/actions/setup-env
         with:
           install-ruby: 'false'
           repo-token: ${{ github.token }}
       - name: '🏗️ Prepare'
-        run: task prepare-no-check
+        run: |
+          melos clean
+          melos bs
+          melos gen
       - name: '🧠 Upload lib artifact'
         uses: actions/upload-artifact@v3
         with:
-          path: lib
+          path: apps/app/lib
           name: ${{ env.DART_ARTIFACT_NAME }}
           retention-days: 3
-
-#      - name: '💢 Report error'
-#        uses: someimportantcompany/github-actions-slack-message@v1
-#        if: failure()
-#        with:
-#          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-#          text: 'Failed to prepare code'
-#          color: failure
 
   deploy-android:
     runs-on: ubuntu-latest
     needs: prepare
     steps:
       - name: '🛒 Checkout'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: '🧠 Download lib artifact'
         uses: actions/download-artifact@v3
         with:
-          path: lib
+          path: apps/app/lib
           name: ${{ env.DART_ARTIFACT_NAME }}
       - name: '💽 Setup environment'
         uses: ./.github/actions/setup-env
@@ -74,18 +71,14 @@ jobs:
           ANDROID_RELEASE_KEY: ${{ secrets.ANDROID_RELEASE_KEY }}
           PLAY_STORE_DEPLOY_JSON: ${{ secrets.PLAY_STORE_DEPLOY_JSON }}
         run: |
-          echo "$ANDROID_RELEASE_KEY" | base64 -d > android/release-keystore.jks
-          echo "$PLAY_STORE_DEPLOY_JSON" | base64 -d > android/play_store_deploy.json
+          echo "$ANDROID_RELEASE_KEY" | base64 -d > apps/app/android/release-keystore.jks
+          echo "$PLAY_STORE_DEPLOY_JSON" | base64 -d > apps/app/android/play_store_deploy.json
       - name: '🏗️ Build'
         env:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          BUILD_NAME=${{ inputs.build-name }}
-          BUILD_NUMBER=${{ inputs.build-number }}
-          FLAVOR=${{ inputs.flavor }}
-          FORMAT=${{ inputs.android-format }}
-          task build-android FLAVOR=$FLAVOR BUILD_NUMBER=$BUILD_NUMBER BUILD_NAME=$BUILD_NAME PACKAGE_FORMAT=$FORMAT
+          BUILD_NAME=${{ inputs.build-name }} BUILD_NUMBER=${{ inputs.build-number }} FLAVOR=${{ inputs.flavor }} PACKAGE_FORMAT=${{ inputs.android-format }} melos build:android
       - name: '🚀 Deploy'
         if: ${{ inputs.deploy }}
         uses: maierj/fastlane-action@v3.0.0
@@ -94,19 +87,11 @@ jobs:
           FIREBASE_ANDROID_APP_ID: ${{ secrets.FIREBASE_ANDROID_APP_ID }}
         with:
           lane: deploy_${{ inputs.flavor }}
-          subdirectory: 'android'
+          subdirectory: ${{ env.ANDROID_SUBDIRECTORY }}
           options: '{"changelog": ${{ inputs.changelog }}}'
 
-#      - name: '💢 Report error'
-#        uses: someimportantcompany/github-actions-slack-message@v1
-#        if: failure()
-#        with:
-#          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-#          text: 'Failed to deploy production release: failed on Android build deployment'
-#          color: failure
-
   deploy-ios:
-    runs-on: macos-12
+    runs-on: macos-14
     needs: prepare
     timeout-minutes: 90
     env:
@@ -117,41 +102,37 @@ jobs:
       IOS_BUNDLE_ID: ${{ secrets.IOS_BUNDLE_ID }}
     steps:
       - name: '🛒 Checkout'
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: '🧠 Download lib artifact'
         uses: actions/download-artifact@v3
         with:
-          path: lib
+          path: apps/app/lib
           name: ${{ env.DART_ARTIFACT_NAME }}
       - name: '💽 Setup environment'
         uses: ./.github/actions/setup-env
         with:
-          install-protoc: 'false'
           repo-token: ${{ github.token }}
       - name: '🗂️ Install provisioning profiles'
         uses: maierj/fastlane-action@v3.0.0
         with:
           lane: 'install_${{inputs.flavor}}_profiles'
-          subdirectory: 'ios'
+          subdirectory: ${{ env.IOS_SUBDIRECTORY }}
       - name: '🔑 Extract itunes key'
         env:
           ITUNES_API_KEY_ID: ${{ secrets.ITUNES_API_KEY_ID }}
           ITUNES_API_KEY_ISSUER_ID: ${{ secrets.ITUNES_API_KEY_ISSUER_ID }}
           ITUNES_API_KEY: ${{ secrets.ITUNES_API_KEY }}
         run: |
-          API_KEY_FILE_NAME="ios/AppStoreConnectAuthKey.p8"
+          API_KEY_FILE_NAME="apps/app/ios/AppStoreConnectAuthKey.p8"
           echo "$ITUNES_API_KEY" | base64 -d > $API_KEY_FILE_NAME
       - name: '🏗️ Flutter build'
         run: |
-          BUILD_NAME=${{ inputs.build-name }}
-          BUILD_NUMBER=${{ inputs.build-number }}
-          FLAVOR=${{ inputs.flavor }}
-          task build-ios FLAVOR=$FLAVOR BUILD_NUMBER=$BUILD_NUMBER BUILD_NAME=$BUILD_NAME
+          BUILD_NAME=${{ inputs.build-name }} BUILD_NUMBER=${{ inputs.build-number }} FLAVOR=${{ inputs.flavor }} melos build:ios
       - name: '🏗️ Fastlane build'
         uses: maierj/fastlane-action@v3.0.0
         with:
           lane: build
-          subdirectory: 'ios'
+          subdirectory: ${{ env.IOS_SUBDIRECTORY }}
           options: '{ "flavor": "${{ inputs.flavor }}" }'
       - name: '🚀 Deploy'
         if: ${{ inputs.deploy }}
@@ -163,13 +144,5 @@ jobs:
           ITUNES_API_KEY_ISSUER_ID: ${{ secrets.ITUNES_API_KEY_ISSUER_ID }}
         with:
           lane: deploy_${{inputs.flavor}}
-          subdirectory: 'ios'
+          subdirectory: ${{ env.IOS_SUBDIRECTORY }}
           options: '{"changelog": ${{ inputs.changelog }}}'
-
-#      - name: '💢 Report error'
-#        uses: someimportantcompany/github-actions-slack-message@v1
-#        if: failure()
-#        with:
-#          webhook-url: ${{ secrets.SLACK_WEBHOOK_URL }}
-#          text: 'Failed to deploy production release: failed on iOS build deployment'
-#          color: failure

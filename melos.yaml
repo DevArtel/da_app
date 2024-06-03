@@ -9,12 +9,12 @@ scripts:
     description: "‍🍳 Prepare the project for hacking"
     failFast: true
     run: |
-      melos clean &&
-      melos bs &&
-      melos gen &&
-      melos prepare:ios &&
-      melos format &&
-      melos fix &&
+      melos clean && 
+      melos bs && 
+      melos gen && 
+      melos prepare:ios && 
+      melos format && 
+      melos fix && 
       melos analyze
 
   prepare:ios:
@@ -23,10 +23,7 @@ scripts:
     concurrency: 1
     packageFilters:
       fileExists: "ios/Podfile"
-    exec: |
-      cd ios &&
-      flutter precache --ios &&
-      pod install --repo-update
+    exec: if [[ $OSTYPE == 'darwin'* ]]; then cd ios && flutter precache --ios && pod install --repo-update; else echo "Can only run on macOS"; fi
 
   gen:loc:
     description: "🎌️ Generate localization"
@@ -37,6 +34,12 @@ scripts:
       fileExists: l10n.yaml
       dependsOn: "flutter_localizations"
     exec: flutter gen-l10n
+
+  gen:prepare:
+    description: "🧩 Install dependencies required for codegen"
+    failFast: true
+    run: |
+      dart pub global activate flutter_gen
 
   gen:code:
     description: "👷 Generate code"
@@ -50,6 +53,7 @@ scripts:
   gen:
     description: "🚧 Generate everything"
     run: |
+      melos gen:prepare
       melos gen:code --no-select
       melos gen:loc --no-select
 
@@ -58,19 +62,40 @@ scripts:
     failFast: true
     exec: dart fix --apply
 
+  check:
+    description: "👮 Check problems"
+    failFast: true
+    run: |
+      melos format --set-exit-if-changed && 
+      melos analyze
+
   build:android:
-    description: "🤖 Build Android app"
+    description: "🤖 Build release Android app"
     failFast: true
     run: |
       cd apps/app &&
       flutter build ${PACKAGE_FORMAT:-apk} --flavor $FLAVOR --build-number=$BUILD_NUMBER --build-name=$BUILD_NAME
 
+  build:android:debug:
+    description: "🤖 Build debug Android app"
+    failFast: true
+    run: |
+      cd apps/app &&
+      flutter build apk --flavor ${FLAVOR:-staging} --debug
+
   build:ios:
-    description: "🍏 Build iOS app"
+    description: "🍏 Build release iOS app"
     failFast: true
     run: |
       cd apps/app &&
       flutter build ios --flavor $FLAVOR --build-number=$BUILD_NUMBER --build-name=$BUILD_NAME
+
+  build:ios:debug:
+    description: "🍏 Build debug iOS app"
+    failFast: true
+    run: |
+      cd apps/app &&
+      flutter build ios --flavor ${FLAVOR:-staging} --debug
 
   storybook:build:
     description: "🧚 Build Storybook for production"
@@ -96,7 +121,4 @@ scripts:
 command:
   clean:
     hooks:
-      post: |
-        find -E . -regex ".*\.(g|freezed|gen)\.dart" -type f -delete && 
-        find -E . -name "*.lock" -type f -delete && 
-        cd apps/app/ios && pod cache clean --all && cd ../../..
+      post: bash scripts/post_clean.sh
